@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TTF final database</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --bg:#f4f6f8; --surface:#ffffff; --surface-2:#e8eef3; --line:#d2dbe3;
+  --fg:#14202b; --muted:#52616e; --faint:#84919c;
+  --accent:#1a56b0; --accent-soft:#e4edf8;
+  --contango:#2a74cc; --backw:#c85a28;
+  --good:#2a7d4f; --warn:#9a6b12; --bad:#b33832;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e141a; --surface:#151d25; --surface-2:#1c2732; --line:#2c3a48;
+  --fg:#e4ebf1; --muted:#9aabba; --faint:#6e7e8c;
+  --accent:#79adf2; --accent-soft:#1a2c42;
+  --contango:#6aabf0; --backw:#f09262;
+  --good:#63c48c; --warn:#e3b45a; --bad:#f08a84;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e141a; --surface:#151d25; --surface-2:#1c2732; --line:#2c3a48;
+  --fg:#e4ebf1; --muted:#9aabba; --faint:#6e7e8c;
+  --accent:#79adf2; --accent-soft:#1a2c42;
+  --contango:#6aabf0; --backw:#f09262;
+  --good:#63c48c; --warn:#e3b45a; --bad:#f08a84;
+  color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-padding-top:18px}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;padding:0 18px 64px}
+.shell{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:168px minmax(0,1fr);gap:36px}
+@media (max-width:860px){.shell{grid-template-columns:minmax(0,1fr)}.rail{display:none}}
+.rail{position:sticky;top:0;align-self:start;padding-top:32px;max-height:100vh;overflow:auto}
+.rail .lbl{font:500 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.rail ol{list-style:none;margin:0;padding:0}
+.rail a{display:flex;gap:8px;padding:6px 8px;border-radius:6px;color:var(--muted);text-decoration:none;font-size:13.5px}
+.rail a span{font-family:var(--f-mono);color:var(--faint);font-size:11px;padding-top:3px;min-width:1.4em}
+.rail a:hover,.rail a.on,.rail a:focus-visible{background:var(--surface-2);color:var(--fg);outline:none}
+.rail a.on span{color:var(--accent)}
+main{min-width:0;padding-top:32px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.02;letter-spacing:-.02em;margin:10px 0 12px;max-width:18ch}
+.lede{color:var(--muted);max-width:62ch;margin:0;font-size:17px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;align-items:center}
+.chip{font:500 12px/1 var(--f-mono);padding:7px 10px;border-radius:999px;background:var(--surface);color:var(--muted);border:1px solid var(--line)}
+.chip b{color:var(--fg);font-weight:500}
+button.chip{cursor:pointer;color:var(--accent);font-family:var(--f-mono)}
+.pipe{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:22px 0 0}
+@media (max-width:760px){.pipe{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 12px 10px;min-width:0}
+.stage .n{font:500 11px/1 var(--f-mono);color:var(--accent)}
+.stage .t{font-family:var(--f-display);font-weight:600;font-size:16px;margin:4px 0 2px}
+.stage .d{font:12px/1.35 var(--f-mono);color:var(--muted)}
+section{padding-top:42px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-weight:600;font-size:26px;line-height:1.1;margin:0 0 6px;display:flex;gap:10px;align-items:baseline}
+h2 .n{font-family:var(--f-mono);font-size:13px;color:var(--accent);font-weight:500}
+p{margin:0 0 10px;max-width:68ch}
+.sub{color:var(--muted);max-width:68ch}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}
+@media (max-width:640px){.facts{grid-template-columns:minmax(0,1fr)}}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.fact b{display:block;font:500 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.fact span{font-size:14.5px}
+ol.ops{margin:8px 0 12px;padding-left:1.2em;max-width:68ch}
+ol.ops li{margin:5px 0}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px/1.3 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+tr.grp td{background:var(--accent-soft);font:600 12px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+.tag{display:inline-block;font:500 11px/1 var(--f-mono);padding:3px 6px;border-radius:5px;white-space:nowrap}
+.t-target{background:color-mix(in srgb,var(--backw) 16%,transparent);color:var(--backw)}
+.t-feat{background:var(--accent-soft);color:var(--accent)}
+.t-key{background:color-mix(in srgb,var(--backw) 10%,var(--accent-soft));color:var(--accent)}
+.t-ctrl{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.t-flag{background:var(--surface-2);color:var(--muted)}
+.t-raw{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.fx{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0 12px;overflow-x:auto}
+.fx p{font-family:var(--f-mono);font-size:13.5px;line-height:1.7;margin:0;white-space:nowrap}
+.fx .note{font-family:var(--f-body);font-size:13.5px;color:var(--muted);margin-top:6px;max-width:68ch;white-space:normal}
+.call{border-left:3px solid var(--bad);background:color-mix(in srgb,var(--bad) 8%,var(--surface));padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;max-width:68ch}
+.call b{font-family:var(--f-display);font-weight:600}
+.call p{margin:2px 0 0}
+.call.info{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+.call.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 8%,var(--surface))}
+ul.tight{margin:8px 0 0;padding-left:1.15em;max-width:68ch}
+ul.tight li{margin:5px 0}
+footer{margin-top:42px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;max-width:68ch}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media print{
+  body{background:#fff;color:#000;padding:0}
+  .rail,button.chip{display:none}
+  .shell{display:block;max-width:none}
+  .call,.fx,.stage,.fact{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="lbl">Step 3</div>
+  <ol>
+    <li><a href="#scope"><span>00</span>Scope</a></li>
+    <li><a href="#surprise"><span>01</span>Surprise</a></li>
+    <li><a href="#join"><span>02</span>Date join</a></li>
+    <li><a href="#columns"><span>03</span>Columns</a></li>
+    <li><a href="#checks"><span>04</span>Checks</a></li>
+  </ol>
+</nav>
+<main>
+<header>
+  <div class="eyebrow">Question 3 · Dutch TTF · Final database</div>
+  <h1>The file the model reads, one session per row.</h1>
+  <p class="lede">Step 2 is closed. Storage, LNG, weather and the spreads already carry their lags. This page adds the storage-flow surprise, then aligns every series to the TTF calendar. The result is <code>3. Final_DB/final_db.csv</code>.</p>
+  <div class="meta">
+    <span class="chip">Sample <b>4 Jan 2016 → 7 Oct 2026</b></span>
+    <span class="chip">Rows <b>2,778 sessions</b></span>
+    <button class="chip" type="button" id="theme">Theme</button>
+  </div>
+  <div class="pipe" aria-label="Order of work">
+    <div class="stage"><div class="n">01</div><div class="t">Surprise</div><div class="d">gas days, then shift(2)</div></div>
+    <div class="stage"><div class="n">02</div><div class="t">Date join</div><div class="d">as-of, 3 calendar days</div></div>
+    <div class="stage"><div class="n">03</div><div class="t">Save</div><div class="d">final_db.csv</div></div>
+  </div>
+</header>
+
+<section id="scope">
+  <h2><span class="n">00</span>Scope</h2>
+  <p class="sub">M1, M2 and M3 are the ICE Endex generics <code>TZT1</code>, <code>TZT2</code> and <code>TZT3</code>: front month, second month, third month. The dependent variables are the calendar spreads. The outright settlements stay in the file because volatility and the coal–gas switch are built from them. Coal is already €/MWh inside <code>ttf_switch</code>.</p>
+  <div class="fx">
+    <p>s12 = M1 − M2 &nbsp;&nbsp; s13 = M1 − M3 &nbsp;&nbsp; s23 = M2 − M3</p>
+    <p>s12_pct = s12 / M2 × 100 &nbsp;&nbsp; s13_pct = s13 / M3 × 100 &nbsp;&nbsp; s23_pct = s23 / M3 × 100</p>
+    <p class="note">S &lt; 0 is contango, S &gt; 0 is backwardation. The level model uses the percent spreads: two euros was noise near €300 and a real gap near €20. <code>ds12_fwd5</code> and <code>ds13_fwd5</code> are the spread five sessions ahead minus the spread today, on the same contracts, and empty when a roll falls inside the window. They are labels.</p>
+  </div>
+  <div class="call info">
+    <b>What this step leaves alone.</b>
+    <p>No download, no second shift of the processed files, and no refit of features that already exist. The model and the backtest come after the file is saved. The old notebook that stacks rows is not this join.</p>
+  </div>
+</section>
+
+<section id="surprise">
+  <h2><span class="n">01</span>Storage-flow surprise</h2>
+  <p class="sub">A cold day is supposed to withdraw gas. The surprise is the flow that remains after the heating anomaly and the stock level are accounted for. A positive value means more gas went into storage than those two implied, which is bearish for the front spread.</p>
+  <div class="facts">
+    <div class="fact"><b>Inputs</b><span><code>funda.csv</code> and <code>weather_hist.csv</code>, unshifted</span></div>
+    <div class="fact"><b>Columns added</b><span><code>surprise7</code>, <code>surprise7_z</code></span></div>
+    <div class="fact"><b>Lag</b><span><code>shift(2)</code> after the sum and the z-score</span></div>
+  </div>
+  <ol class="ops">
+    <li>Recompute <code>net_inj = −netWithdrawal / 1000</code> and <code>storage_dev</code> from raw storage. The normal is the same calendar day in the five preceding years only. Map 29 February to 28 February, and keep 29 February out of the 28 February average. The deviation starts on 1 January 2016.</li>
+    <li>Recompute the daily heating anomaly from raw weather: <code>hdd</code> minus the same calendar day over the previous ten years, the year itself excluded, with the same February rule. Use the daily anomaly, not <code>hdd_anom7</code>.</li>
+    <li>Place both on one gas-day table. A row enters the regression when <code>net_inj</code>, that day’s heating anomaly, and yesterday’s <code>storage_dev</code> are all present. The first such day is 2 January 2016.</li>
+    <li>At each gas day, fit only on earlier days: <code>net_inj</code> on that day’s heating anomaly, yesterday’s <code>storage_dev</code>, an intercept, and calendar-month dummies, January omitted. Drop a dummy that does not vary in the past sample. Leave the expectation empty until the design has full rank.</li>
+    <li><code>surprise7</code> sums <code>net_inj</code> minus that expectation over the day and the six preceding gas days. One missing residual leaves the sum empty.</li>
+    <li><code>surprise7_z</code> subtracts the mean of the previous 365 gas days and divides by their sample standard deviation, excluding the day itself. It stays empty until 365 prior values exist.</li>
+    <li>Apply <code>shift(2)</code> on the gas-day index, the same clock as AGSI. A five-year same-day average of the flow is not written.</li>
+  </ol>
+  <div class="fx">
+    <p>Surprise7 = Σ<sub>k=0…6</sub> (NetInj − E[NetInj])<sub>t−k</sub></p>
+    <p class="note">The processed files are the wrong pair for this regression. On a processed row, storage is gas day t−2 and realised weather is gas day t−1.</p>
+  </div>
+  <div class="call">
+    <b>What corrupts the series.</b>
+    <p>Building the residual from <code>funda_processed.csv</code> and <code>weather_hist_processed.csv</code>. Those columns are already lagged, and they are not lagged by the same number of days.</p>
+  </div>
+</section>
+
+<section id="join">
+  <h2><span class="n">02</span>Date join</h2>
+  <p class="sub">The master index is the price calendar. Weekend fundamentals stick to the next session. A series that has finished is not carried on.</p>
+  <div class="facts">
+    <div class="fact"><b>Inputs</b><span>The five processed files, plus the shifted surprise</span></div>
+    <div class="fact"><b>Index</b><span>Mon 4 Jan 2016 → Wed 7 Oct 2026</span></div>
+    <div class="fact"><b>Rule</b><span>Backward as-of, tolerance 3 calendar days</span></div>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Series</th><th>File</th><th>Lag already applied</th><th>How it meets the session</th></tr></thead>
+      <tbody>
+        <tr><td>Prices and targets</td><td class="num">prices_processed.csv</td><td class="num">none</td><td>The master index. Sessions where M1, M2 and M3 all print.</td></tr>
+        <tr><td>Storage and surprise</td><td class="num">funda_processed.csv</td><td class="num">shift(2)</td><td>Backward as-of. A Friday print that lands on Sunday sticks to Monday.</td></tr>
+        <tr><td>LNG</td><td class="num">lng_processed.csv</td><td class="num">shift(2)</td><td>Same as-of. <code>sendout_bad</code> comes with it.</td></tr>
+        <tr><td>Realised weather</td><td class="num">weather_hist_processed.csv</td><td class="num">shift(1)</td><td>Same as-of. The 6 Oct 2026 observation already sits on 7 Oct.</td></tr>
+        <tr><td>Forecast</td><td class="num">weather_forecast_processed.csv</td><td class="num">none</td><td>Left join on the issue date. Empty before 15 Feb 2024.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ol class="ops">
+    <li>Keep every price column, including <code>s23_pct</code>. Restrict the rows to 4 January 2016 through 7 October 2026. Prices continue to 12 October; the file stops on the 7th, the last day storage, realised weather and the three settlements are all known.</li>
+    <li>Bring lagged storage, the shifted surprise, lagged LNG and lagged realised weather onto that index with a backward as-of merge and a tolerance of three calendar days. The merge does not add a further shift.</li>
+    <li>Left-join <code>fc_hdd_anom7</code> on the issue date. The forecast file runs from 15 February 2024 through 5 October 2026, so 6 and 7 October 2026 stay empty as well. Leave those cells empty and keep the rows.</li>
+    <li>Sort by date. One trading day, one row. Write <code>3. Final_DB/final_db.csv</code>.</li>
+  </ol>
+  <div class="call">
+    <b>What corrupts the series.</b>
+    <p>Filling <code>fc_hdd_anom7</code> with zero before 15 February 2024, or dropping the earlier rows. Zero would read as a normal weather forecast. An inner join would throw away 2016–2023.</p>
+  </div>
+</section>
+
+<section id="columns">
+  <h2><span class="n">03</span>Columns</h2>
+  <p class="sub">Every fundamental column already carries the lag from step 2. <code>consumption</code>, <code>consumptionFull</code> and <code>trend</code> are absent. <code>gasInStorage</code> is used only in the stock-flow check and is not saved.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Column</th><th>Content</th><th>Unit</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="4">Identity</td></tr>
+        <tr><td class="num">date</td><td>TTF trading day. The index.</td><td>date</td><td><span class="tag t-flag">index</span></td></tr>
+        <tr><td class="num">roll_day</td><td>1 when the front contract stops trading.</td><td>0/1</td><td><span class="tag t-flag">flag</span></td></tr>
+        <tr><td class="num">dte</td><td>Business days to M1 expiry.</td><td>days</td><td><span class="tag t-ctrl">control</span></td></tr>
+        <tr class="grp"><td colspan="4">Prices and targets</td></tr>
+        <tr><td class="num">m1 m2 m3</td><td>Settlements. Raw inputs, not the dependent variables.</td><td>€/MWh</td><td><span class="tag t-raw">raw</span></td></tr>
+        <tr><td class="num">s12 s13 s23</td><td>M1−M2, M1−M3, M2−M3.</td><td>€/MWh</td><td><span class="tag t-target">target</span></td></tr>
+        <tr><td class="num">s12_pct s13_pct s23_pct</td><td>Spread divided by the deferred month, times 100.</td><td>%</td><td><span class="tag t-target">target</span></td></tr>
+        <tr><td class="num">ds12_fwd5 ds13_fwd5</td><td>Five-session change on the same contracts. Empty across a roll.</td><td>€/MWh</td><td><span class="tag t-target">label</span></td></tr>
+        <tr><td class="num">vol_m1 vol_m2 vol_m3</td><td>20-day annualised vol of log returns.</td><td>%</td><td><span class="tag t-feat">feature</span></td></tr>
+        <tr><td class="num">sd_ds12 sd_ds13</td><td>20-day standard deviation of the daily spread change.</td><td>€/MWh</td><td><span class="tag t-feat">risk</span></td></tr>
+        <tr><td class="num">ttf_switch switch_gap</td><td>Coal–gas switch, and M1 minus that level.</td><td>€/MWh</td><td><span class="tag t-feat">feature</span></td></tr>
+        <tr class="grp"><td colspan="4">Storage, lag 2 · surprise built here</td></tr>
+        <tr><td class="num">full full_norm5y</td><td>Percent full, and its 5-year same-day average.</td><td>%</td><td><span class="tag t-feat">feature</span></td></tr>
+        <tr><td class="num">storage_dev storage_dev_sq</td><td>Full minus the normal, and the square.</td><td>pp, pp²</td><td><span class="tag t-key">key</span></td></tr>
+        <tr><td class="num">net_inj inj_util wd_util</td><td>Net injection and utilisation of capacity.</td><td>TWh/d, ratio</td><td><span class="tag t-feat">feature</span></td></tr>
+        <tr><td class="num">surprise7 surprise7_z</td><td>7-day flow surprise, and its z-score against the previous 365 gas days.</td><td>TWh, σ</td><td><span class="tag t-key">key</span></td></tr>
+        <tr><td class="num">agsi_estimated</td><td>1 when the AGSI status is E.</td><td>0/1</td><td><span class="tag t-flag">flag</span></td></tr>
+        <tr class="grp"><td colspan="4">Weather, lag 1 · forecast, no lag · LNG, lag 2</td></tr>
+        <tr><td class="num">hdd cdd</td><td>Demand-weighted degree days.</td><td>°C·day</td><td><span class="tag t-raw">raw</span></td></tr>
+        <tr><td class="num">hdd_anom7 cdd_anom7</td><td>Seven-day anomaly versus the previous ten years.</td><td>°C·day</td><td><span class="tag t-feat">feature</span></td></tr>
+        <tr><td class="num">fc_hdd_anom7</td><td>Forecast of that heating anomaly. Empty before 15 Feb 2024.</td><td>°C·day</td><td><span class="tag t-feat">feature</span></td></tr>
+        <tr><td class="num">lng7 lng_dev</td><td>Seven-day send-out, and its gap versus the past year.</td><td>TWh</td><td><span class="tag t-feat">feature</span></td></tr>
+        <tr><td class="num">sendout_bad</td><td>1 on the lagged 5 Oct 2026 print only.</td><td>flag</td><td><span class="tag t-flag">flag</span></td></tr>
+        <tr class="grp"><td colspan="4">Controls</td></tr>
+        <tr><td class="num">d_feb … d_dec</td><td>Delivery month of M1. January is the base.</td><td>0/1</td><td><span class="tag t-ctrl">control</span></td></tr>
+        <tr><td class="num">inj_season crisis</td><td>April–September, and July 2021–March 2023.</td><td>0/1</td><td><span class="tag t-ctrl">control</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="checks">
+  <h2><span class="n">04</span>Checks before the file is saved</h2>
+  <p class="sub">Five gates. If one fails, the file is not the sample the model should see.</p>
+  <ul class="tight">
+    <li>On the unshifted gas-day table, the daily change in <code>gasInStorage</code> lines up with <code>net_inj</code>, inside revision noise.</li>
+    <li>After its first valid date, <code>storage_dev</code> has no unexplained null. In the lagged storage file that date is 3 January 2016. The blanks on 1 and 2 January are the <code>shift(2)</code> itself. From the first session, 4 January 2016, the trading-day series is complete.</li>
+    <li><code>fc_hdd_anom7</code> is empty before 15 February 2024 and present on every later session through 5 October 2026.</li>
+    <li><code>consumption</code>, <code>consumptionFull</code> and <code>trend</code> are absent.</li>
+    <li>The saved targets are <code>s12</code>, <code>s13</code>, <code>s23</code>, the three percent spreads, and <code>ds12_fwd5</code>, <code>ds13_fwd5</code>. <code>m1</code>, <code>m2</code> and <code>m3</code> remain in the file as raw settlements.</li>
+  </ul>
+  <div class="call ok">
+    <b>The file is ready for the model when those five hold.</b>
+    <p>The scatter of the percent M1–M2 spread against <code>storage_dev</code> belongs to the model notebook, not to this step.</p>
+  </div>
+</section>
+
+<footer>
+  Lags, the surprise and the column list follow §03 and §04 of <cite>TTF Spread Storage Model</cite> and the join section of <cite>Data Processing</cite>. The sample is the price calendar from 4 January 2016 through 7 October 2026.
+</footer>
+</main>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var themeBtn = document.getElementById("theme");
+  var saved = null;
+  try { saved = localStorage.getItem("ttf-theme"); } catch (e) {}
+  if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
+  function label() {
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (root.getAttribute("data-theme") !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+    themeBtn.textContent = dark ? "Light" : "Dark";
+  }
+  label();
+  themeBtn.addEventListener("click", function () {
+    var dark = themeBtn.textContent === "Dark";
+    root.setAttribute("data-theme", dark ? "dark" : "light");
+    try { localStorage.setItem("ttf-theme", dark ? "dark" : "light"); } catch (e) {}
+    label();
+  });
+  var links = Array.prototype.slice.call(document.querySelectorAll(".rail a"));
+  var byId = {};
+  links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        links.forEach(function (a) { a.classList.remove("on"); });
+        var hit = byId[en.target.id];
+        if (hit) hit.classList.add("on");
+      });
+    }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+    document.querySelectorAll("main section").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>

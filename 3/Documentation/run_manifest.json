@@ -1,0 +1,99 @@
+{
+  "started_utc": "2026-10-16T15:55:19.459244+00:00",
+  "section": "all",
+  "python": "3.13.12",
+  "packages": {
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.8.0",
+    "statsmodels": "0.14.6",
+    "matplotlib": "3.10.8",
+    "nbformat": "5.10.4",
+    "nbclient": "0.11.0",
+    "ipykernel": "7.2.0",
+    "tzdata": "2025.3"
+  },
+  "raw_sources": [
+    {
+      "file": "1. Raw Data/funda.csv",
+      "bytes": 549558,
+      "sha256": "7257caf0d6daa19334790f17b44559ab9eb7825ac16a00a1c099b1277128d820"
+    },
+    {
+      "file": "1. Raw Data/lng_sendout.csv",
+      "bytes": 145265,
+      "sha256": "176895386d6cb2163d35392cd8f0952362b8f4f5bcf4a9c661372b9125f07f56"
+    },
+    {
+      "file": "1. Raw Data/prices.csv",
+      "bytes": 438162,
+      "sha256": "a6ac1c8396c02035a246b3186ef480d80a67bb5c03d35393c176f169c4e213df"
+    },
+    {
+      "file": "1. Raw Data/weather_forecast.csv",
+      "bytes": 17261,
+      "sha256": "6872549d1f79bd14d8d76534cb84a7c8f7be00b562f375ec9b44cd5d00d06e6d"
+    },
+    {
+      "file": "1. Raw Data/weather_hist.csv",
+      "bytes": 467526,
+      "sha256": "b09c7d8960c6fe5ee974e941a859e264f14aadccacef367f5673436b7bd0828e"
+    }
+  ],
+  "executed_notebooks": [
+    {
+      "file": "2. Data Processing/prices_processing.ipynb",
+      "code_sha256": "5489f75ded648cb7d7e1c6672f24270e90f21c6aa36b1d888c1f2fb9b74f3b58",
+      "code_cells": 5
+    },
+    {
+      "file": "2. Data Processing/funda_processing.ipynb",
+      "code_sha256": "17c84c699ad0a78dd94ea50e2ebf193c7c89d7d6230712f4bef76ed0c8073aea",
+      "code_cells": 3
+    },
+    {
+      "file": "2. Data Processing/lng_sendout_processing.ipynb",
+      "code_sha256": "528006735bd2e69264ffe5ec5ddc4668cede4c77042ac4ddbb686f4a04e8bb25",
+      "code_cells": 2
+    },
+    {
+      "file": "2. Data Processing/weather_hist_processing.ipynb",
+      "code_sha256": "509d5ec2c6b93584b40b28d97252e1d5837e9c8484ad1e6e39c6fdc5efa1d2c5",
+      "code_cells": 2
+    },
+    {
+      "file": "2. Data Processing/weather_forecast_processing.ipynb",
+      "code_sha256": "55a80f917ab033ad4536260b9b5fb69cfce8c3e2c862d4292a4ca4d0e8eac825",
+      "code_cells": 1
+    },
+    {
+      "file": "3. Final_DB/final_table.ipynb",
+      "code_sha256": "d4778e6c01587c1dcea267d6bbc777834ee2287880b2b5f390427abcb18c59ec",
+      "code_cells": 6
+    },
+    {
+      "file": "4. Modelling/spread_models.ipynb",
+      "code_sha256": "160264cadc457958cbe3a56b762208509f16347f2fde104ceef6d75c554605bb",
+      "code_cells": 6
+    },
+    {
+      "file": "4. Strategy/spread_strategy.ipynb",
+      "code_sha256": "f86d13403428965a6d9960a69231fc8eeb51012141ba0441e52e3c17e028482d",
+      "code_cells": 4
+    },
+    {
+      "file": "5. Backtest/spread_backtest.ipynb",
+      "code_sha256": "bb2e919e2ca14a95aa1abc6574c358ff8ee25db5f0d68f77039b92fab0d27d20",
+      "code_cells": 5
+    }
+  ],
+  "status": "passed",
+  "limitations": [
+    "Bloomberg generic delivery mappings are inferred, not verified contract histories.",
+    "AGSI/ALSI histories are revised snapshots, not archived publication vintages.",
+    "Forecast issue hours are unavailable; a one-calendar-day safety lag is applied.",
+    "Costs, fractional-MW positions and capital are research assumptions, not broker quotes."
+  ],
+  "finished_utc": "2026-10-16T15:56:07.156264+00:00"
+}

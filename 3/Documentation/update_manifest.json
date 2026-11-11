@@ -1,0 +1,238 @@
+{
+  "applied_utc": "2026-10-16T15:58:11.839018+00:00",
+  "backup": "Documentation/Backups/2026-10-16_155811_UTC",
+  "changes": [
+    {
+      "file": "2. Data Processing/funda_processed.csv",
+      "original_sha256": "e9d9e631e794d373a6fbdc41fb988a1a2a2e262e32179d0f6dc2d4c801178d6e",
+      "updated_sha256": "8adfc3799de618242fad97264161eb1393b33a72d71014d7be73f19eb1071384"
+    },
+    {
+      "file": "2. Data Processing/funda_processing.ipynb",
+      "original_sha256": "1e036c8042d72ffb57a6c48aee1078c274d3fca6daffa1576f28f016726c257a",
+      "updated_sha256": "798045e47f8fb8e73ff9449104c0aa5c8515138f4811f96cf4440b34ddc91785"
+    },
+    {
+      "file": "2. Data Processing/lng_processed.csv",
+      "original_sha256": "fdfbba54c98ed1c6d71c9f7e4e06975a660dc5039ac2bb2a01b714c8a58c960c",
+      "updated_sha256": "1b228d4e6ebadab953e3681eaba5677cc3f39df98bc6aa823088066078064fee"
+    },
+    {
+      "file": "2. Data Processing/lng_sendout_processing.ipynb",
+      "original_sha256": "8c11d564d6f771fe9afb204adfa4354c88b08b34c719b3208e1714e9e6d75cab",
+      "updated_sha256": "1bd9c04884309588af3de89a3042da53cf2e0e43518a5baa1982dc7910088b9b"
+    },
+    {
+      "file": "2. Data Processing/prices_processed.csv",
+      "original_sha256": "30b186b54732cd350b923361ded253006b52a176bee8bb0d53fcf47d5a7bfedf",
+      "updated_sha256": "a4a635d268b65a29797c71c20d1661b0645ca22999453e0c318f33a4c4aa9054"
+    },
+    {
+      "file": "2. Data Processing/prices_processing.ipynb",
+      "original_sha256": "852d02e8b0bc9ac97aa346d44762ae1cb6f3e12432623738700f567656e507d7",
+      "updated_sha256": "dccd8697c0b8d8e85bd748d39e7e56725cf1ee3a1a838b174ad12fc5c53caffa"
+    },
+    {
+      "file": "2. Data Processing/weather_forecast_processed.csv",
+      "original_sha256": "20ace8b4864af884a840266a51584b5e29802d41bf62676aac546b468be0955c",
+      "updated_sha256": "db2ea73b7b8c4a415288b1c630b9c7ab94d85e71556657a4639d922109b4364b"
+    },
+    {
+      "file": "2. Data Processing/weather_forecast_processing.ipynb",
+      "original_sha256": "2bc798c815775db4060ab475a8da37c5956c9bb9dfc95c4a7b3174a5360355b8",
+      "updated_sha256": "27d52be8045a78bbe4e4a6dc710720ab1ecc1504366db2dc9642d51e07a4d921"
+    },
+    {
+      "file": "2. Data Processing/weather_hist_processed.csv",
+      "original_sha256": "8e73f2cb941e2f14dc2f85461349a1fde8c6c01e79d9f128bb1b282147328f08",
+      "updated_sha256": "0c4cf4490844ffdeff1739993b67d8452c9903a4bdfd5f9a13b63c50e99d768e"
+    },
+    {
+      "file": "2. Data Processing/weather_hist_processing.ipynb",
+      "original_sha256": "dfabb5cf3907e225c20309be010b7ed62a9adbc4e68a613eb473d3e3e2206bf1",
+      "updated_sha256": "fed39f7b3d37031e892adcd01258b7240a5bb6a71c41213101e670bc0e50b462"
+    },
+    {
+      "file": "3. Final_DB/final_db.csv",
+      "original_sha256": "f7cd5a5acfb6965346a0bbf2230256dc6a5d04a1457c5e6688662366dcdf6fff",
+      "updated_sha256": "1dd02ea6a499d9dba1078960f0c5b6b1f8c183299754a463a5663500a945311f"
+    },
+    {
+      "file": "3. Final_DB/final_table.ipynb",
+      "original_sha256": "842aaf026be7f770f693dd0ceab9cad057a16d7ee58105ff420b7502b92d79d8",
+      "updated_sha256": "14d82adad7152b9f90b19ca92c01f28d92f1272f61bfe9e4ca6032c74350d084"
+    },
+    {
+      "file": "4. Modelling/coefficients.csv",
+      "original_sha256": null,
+      "updated_sha256": "6db8492adf3ff11a15a6d4c2cc39796444a04dad3f341362d925188b9014e75f"
+    },
+    {
+      "file": "4. Modelling/comparison_metrics.csv",
+      "original_sha256": null,
+      "updated_sha256": "9e923d25946da02258b9dcc40773e7f2f662226fdc3469402546d7f9dc7637c6"
+    },
+    {
+      "file": "4. Modelling/fair_value_metrics.csv",
+      "original_sha256": null,
+      "updated_sha256": "6c7c9b8c4562ac53c67b9c1d26c7f93e2866edd0f7a17014adcd311522dc8a01"
+    },
+    {
+      "file": "4. Modelling/fair_value_predictions.csv",
+      "original_sha256": null,
+      "updated_sha256": "214674b93b438540bb4438ddf7d102c4762082bc8d380f6c1f3f1997a749dc5a"
+    },
+    {
+      "file": "4. Modelling/forecast_comparisons.csv",
+      "original_sha256": null,
+      "updated_sha256": "d986e8dd0cf5e34366b02fa4b14188b677ceb16ddf2ec9bee3df3b2d3016aefc"
+    },
+    {
+      "file": "4. Modelling/model_metrics_common.csv",
+      "original_sha256": null,
+      "updated_sha256": "92241bf4b53cb4e278d6a5c67c090def7cfae2512685e1a47184abb768f11564"
+    },
+    {
+      "file": "4. Modelling/model_predictions.csv",
+      "original_sha256": null,
+      "updated_sha256": "515ec9dbe8dcc9a217eaa76c51042ac4d942b18b41a421c174d1e67fde61dbff"
+    },
+    {
+      "file": "4. Modelling/spread_models.ipynb",
+      "original_sha256": null,
+      "updated_sha256": "d17f1d8804549262385a8f880353bd9067ceb4526391d18d30eb85a2986d7c5e"
+    },
+    {
+      "file": "4. Strategy/forecast_support.csv",
+      "original_sha256": null,
+      "updated_sha256": "a72cf64c3c5736b37cba5a77467e8b0efd46a01556f44cc465fc4f0f83f89151"
+    },
+    {
+      "file": "4. Strategy/spread_strategy.ipynb",
+      "original_sha256": null,
+      "updated_sha256": "6225966bbe065f41994e1616bd83f2fe9e8247838f1d2cb63180e0d11c102fbf"
+    },
+    {
+      "file": "4. Strategy/strategy_assumptions.json",
+      "original_sha256": null,
+      "updated_sha256": "2ae757212054749b0cd1166be749254de840b48818d192fff4b4f3347ca648ae"
+    },
+    {
+      "file": "4. Strategy/strategy_coverage.csv",
+      "original_sha256": null,
+      "updated_sha256": "37b14659812cf53e6d7fcd3254b2ab8457da3f201c24ee36a4d8c0e81ac5a100"
+    },
+    {
+      "file": "4. Strategy/strategy_decisions.csv",
+      "original_sha256": null,
+      "updated_sha256": "5432a5563fa1200454d9e429888b52c9bf1cd8c001e98dce2c9016647435b8e3"
+    },
+    {
+      "file": "4. Strategy/strategy_trades.csv",
+      "original_sha256": null,
+      "updated_sha256": "23be41d93cf56dbc73c03be6214e9554018b147646e48f1f548c7701345c3661"
+    },
+    {
+      "file": "4. Strategy/strategy_universe.csv",
+      "original_sha256": null,
+      "updated_sha256": "f76d04499b56004de235bd5aab4dd52cf56f915985e5a18417ea260e5b931623"
+    },
+    {
+      "file": "5. Backtest/backtest_assumptions.json",
+      "original_sha256": null,
+      "updated_sha256": "2ae757212054749b0cd1166be749254de840b48818d192fff4b4f3347ca648ae"
+    },
+    {
+      "file": "5. Backtest/daily_pnl.csv",
+      "original_sha256": null,
+      "updated_sha256": "7b9910d763e9d9592bec02d89f3dea20a03c71570a773f4a87406fec028bfe09"
+    },
+    {
+      "file": "5. Backtest/equity_test_h5.png",
+      "original_sha256": null,
+      "updated_sha256": "05808a42e37e371e48b474f300aea50215669b4a7f6472008b52c88a179daaec"
+    },
+    {
+      "file": "5. Backtest/metrics.csv",
+      "original_sha256": null,
+      "updated_sha256": "16f4fafa099729c1151710ecc1677adb4f7177b24dfa7e0640f34a4d0f1f9d5d"
+    },
+    {
+      "file": "5. Backtest/per_trade.csv",
+      "original_sha256": null,
+      "updated_sha256": "78615c7967a3109e1da19130ab92a114813678859cbbe9cda646493e149f9366"
+    },
+    {
+      "file": "5. Backtest/spread_backtest.ipynb",
+      "original_sha256": null,
+      "updated_sha256": "10c0986f40e5ab479b9ff686ddfbc1dd3a60b47dadac97389e587f0559ad26b5"
+    },
+    {
+      "file": "5. Backtest/yearly.csv",
+      "original_sha256": null,
+      "updated_sha256": "0337768ac4cfad767b0676eb58b1ee6316e39a1037b42092d4aaaff9ed71c41f"
+    },
+    {
+      "file": "Documentation/Data Processing.html",
+      "original_sha256": "85ffc709eaff9f2a67c9fd14e07ed47eac562b28f5e0c21d574200df1574df76",
+      "updated_sha256": "295855684c6e9f061453b8f99171736add8d33b78a141062556a79be127d55fc"
+    },
+    {
+      "file": "Documentation/Database Columns.html",
+      "original_sha256": "136dd90957c221923821cfe1082d88d7fed55395f3bcfde41293bff15667f4db",
+      "updated_sha256": "e272bcef6939e85237115461b30e18f8a43e9c0a03acbb6a903ee77713a697f2"
+    },
+    {
+      "file": "Documentation/Final Database.html",
+      "original_sha256": "1c69d568486fee5e392833e649bfcf061ff8fc38c8444614cb3b1ae0647fe4c6",
+      "updated_sha256": "f6c4b04ff47ee79b6ddc215800553157cdc446d13fdc26df039f35a54ca6d19c"
+    },
+    {
+      "file": "Documentation/Modelling.html",
+      "original_sha256": "ea8ca6ec5a438b21ad102427a3b1541cbd8bb1c4d56ba1a35c68d855adaffcc2",
+      "updated_sha256": "1d8c6d6ef44a47000bef828c03619dd0de104a92b97b3dfe196a0063306a8f43"
+    },
+    {
+      "file": "Documentation/Project Change Log.html",
+      "original_sha256": null,
+      "updated_sha256": "a703e4f7b4af87e964fbcf52d4d1b15a5127c153e5749850b8258e538514ce17"
+    },
+    {
+      "file": "Documentation/run_manifest.json",
+      "original_sha256": null,
+      "updated_sha256": "bac535c7d2c9315c537fe0d5feb6ac9c2e0be60b1d7b68e70bdf00885954ec65"
+    },
+    {
+      "file": "Documentation/TTF Spread Storage Model.html",
+      "original_sha256": "b3fef3936f3d55a5dd26cde3c8eb0a8003fe7102e2055644b6128b6efb6086d0",
+      "updated_sha256": "bc1169b3a09452f0f6cafe146ea445323f9660f402da04d9896f8ecef9231ca5"
+    },
+    {
+      "file": "Documentation/validation_results.json",
+      "original_sha256": null,
+      "updated_sha256": "28bf168d3a9eab3c79ff12e839f76f6b3ce1f9697455d6e7bca3ee320bde2d29"
+    },
+    {
+      "file": "README.md",
+      "original_sha256": null,
+      "updated_sha256": "e91411c5e1782e4cbda8dc4de8806acb76aca65206c0731ac71c1a7a2cea2aea"
+    },
+    {
+      "file": "requirements.txt",
+      "original_sha256": null,
+      "updated_sha256": "a5b5ceb4330bea6b94da752c5f01e4bd1d9e980ee852627b121f3ba614f86d1c"
+    },
+    {
+      "file": "run_project.py",
+      "original_sha256": null,
+      "updated_sha256": "87c9eadae2593490f7af497caf17fb0a40f47da99022974a1c8e0094555f6956"
+    },
+    {
+      "file": "validate_project.py",
+      "original_sha256": null,
+      "updated_sha256": "c23a2e010c728938f3dcc067c707a0921e6dd9da60c7ae2f55c4ce64324c0809"
+    }
+  ],
+  "raw_files_modified": false,
+  "validation_checks_passed": 91
+}

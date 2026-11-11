@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Modelling · TTF calendar spread</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --bg:#f4f6f8; --surface:#ffffff; --surface-2:#e8eef3; --line:#d2dbe3;
+  --fg:#14202b; --muted:#52616e; --faint:#84919c;
+  --accent:#1a56b0; --accent-soft:#e4edf8;
+  --contango:#2a74cc; --backw:#c85a28;
+  --good:#2a7d4f; --warn:#9a6b12; --bad:#b33832;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e141a; --surface:#151d25; --surface-2:#1c2732; --line:#2c3a48;
+  --fg:#e4ebf1; --muted:#9aabba; --faint:#6e7e8c;
+  --accent:#79adf2; --accent-soft:#1a2c42;
+  --contango:#6aabf0; --backw:#f09262;
+  --good:#63c48c; --warn:#e3b45a; --bad:#f08a84;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e141a; --surface:#151d25; --surface-2:#1c2732; --line:#2c3a48;
+  --fg:#e4ebf1; --muted:#9aabba; --faint:#6e7e8c;
+  --accent:#79adf2; --accent-soft:#1a2c42;
+  --contango:#6aabf0; --backw:#f09262;
+  --good:#63c48c; --warn:#e3b45a; --bad:#f08a84;
+  color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-padding-top:18px}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;padding:0 18px 64px}
+.shell{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:188px minmax(0,1fr);gap:36px}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr)}.rail{display:none}}
+.rail{position:sticky;top:0;align-self:start;padding-top:32px;max-height:100vh;overflow:auto}
+.rail .lbl{font:500 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.rail ol{list-style:none;margin:0;padding:0}
+.rail a{display:flex;gap:8px;padding:6px 8px;border-radius:6px;color:var(--muted);text-decoration:none;font-size:13.5px}
+.rail a span{font-family:var(--f-mono);color:var(--faint);font-size:11px;padding-top:3px;min-width:1.4em}
+.rail a:hover,.rail a.on,.rail a:focus-visible{background:var(--surface-2);color:var(--fg);outline:none}
+.rail a.on span{color:var(--accent)}
+main{min-width:0;padding-top:32px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(32px,4.2vw,46px);line-height:1.02;letter-spacing:-.02em;margin:10px 0 12px;max-width:16ch}
+.lede{color:var(--muted);max-width:62ch;margin:0;font-size:17.5px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;align-items:center}
+.chip{font:500 12px/1 var(--f-mono);padding:7px 10px;border-radius:999px;background:var(--surface);color:var(--muted);border:1px solid var(--line)}
+.chip b{color:var(--fg);font-weight:500}
+button.chip{cursor:pointer;color:var(--accent);font-family:var(--f-mono)}
+section{padding-top:46px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-weight:600;font-size:26px;line-height:1.1;margin:0 0 6px;display:flex;gap:10px;align-items:baseline}
+h2 .n{font-family:var(--f-mono);font-size:13px;color:var(--accent);font-weight:500}
+h3{font-family:var(--f-display);font-weight:600;font-size:18px;margin:22px 0 6px}
+p{margin:0 0 10px;max-width:68ch}
+.sub{color:var(--muted);max-width:68ch}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+a{color:var(--accent)}
+.pipe{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:22px 0 0}
+@media (max-width:760px){.pipe{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 10px 12px;min-width:0;text-decoration:none;color:inherit;display:block}
+.stage:hover{border-color:var(--accent)}
+.stage .h{font:500 11px/1 var(--f-mono);color:var(--accent);margin-bottom:6px}
+.stage .t{font-family:var(--f-display);font-weight:600;font-size:15px;line-height:1.15}
+.stage .d{margin:4px 0 0;font-size:12.5px;color:var(--muted);max-width:none}
+.clock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:14px 0}
+@media (max-width:760px){.clock{grid-template-columns:1fr 1fr}}
+.age{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0;border-top:3px solid var(--accent)}
+.age.old{border-top-color:var(--warn)}
+.age.older{border-top-color:var(--backw)}
+.age .when{font:500 11px/1.3 var(--f-mono);color:var(--accent);min-height:2.6em}
+.age.old .when{color:var(--warn)}
+.age.older .when{color:var(--backw)}
+.age b{display:block;font-family:var(--f-display);font-weight:600;font-size:16px;margin:4px 0}
+.age p{margin:0;font-size:13px;color:var(--muted);max-width:none}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px/1.3 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:var(--f-mono);font-size:12.5px;font-weight:500;white-space:nowrap}
+.up{color:var(--backw);font-weight:600}
+.down{color:var(--contango);font-weight:600}
+.tag{display:inline-block;font:500 11px/1 var(--f-mono);padding:3px 6px;border-radius:5px;white-space:nowrap}
+.t-in{background:var(--accent-soft);color:var(--accent)}
+.t-out{background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad)}
+.t-later{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.t-label{background:color-mix(in srgb,var(--backw) 14%,transparent);color:var(--backw)}
+.fx{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0 12px;overflow-x:auto}
+.fx .eq{font-family:var(--f-mono);font-size:13.5px;line-height:1.7;margin:0;white-space:nowrap}
+.fx .note{font-size:13.5px;color:var(--muted);margin:6px 0 0;max-width:68ch;white-space:normal}
+.void{border-left:3px solid var(--bad);background:color-mix(in srgb,var(--bad) 8%,var(--surface));padding:8px 12px;border-radius:0 8px 8px 0;margin:12px 0;max-width:68ch;font-size:14.5px}
+.void b{font-family:var(--f-display);font-weight:600}
+.call{border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface));padding:8px 12px;border-radius:0 8px 8px 0;margin:12px 0;max-width:68ch;font-size:14.5px}
+.call.warn{border-left-color:var(--warn);background:color-mix(in srgb,var(--warn) 10%,var(--surface))}
+.call b{font-family:var(--f-display);font-weight:600}
+.call p,.void p{margin:2px 0 0}
+figure{margin:12px 0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 12px 8px}
+figure .svgw{overflow-x:auto}
+figure svg{display:block;width:100%;height:auto}
+figcaption{font-size:13px;color:var(--muted);margin-top:6px;max-width:72ch}
+svg text{font-family:var(--f-mono);font-size:11px;fill:var(--muted)}
+svg .ttl{font-family:var(--f-body);font-size:12px;fill:var(--fg);font-weight:500}
+.pair{display:grid;grid-template-columns:1.15fr .85fr;gap:10px;margin:12px 0}
+@media (max-width:760px){.pair{grid-template-columns:minmax(0,1fr)}}
+.pair figure{margin:0}
+.rolls{display:grid;gap:8px;margin:12px 0}
+.roll{display:grid;grid-template-columns:168px repeat(6,minmax(0,1fr));gap:6px;align-items:center}
+@media (max-width:760px){.roll{grid-template-columns:1fr;gap:4px}}
+.roll .who{font:500 12px/1.35 var(--f-mono);color:var(--muted)}
+.cell{background:var(--surface);border:1px solid var(--line);border-radius:8px;text-align:center;padding:8px 4px;font:500 12px/1.2 var(--f-mono)}
+.cell small{display:block;color:var(--faint);font-weight:400;margin-top:3px}
+.cell.on{background:color-mix(in srgb,var(--good) 14%,var(--surface));border-color:var(--good);color:var(--good)}
+.cell.bad{background:color-mix(in srgb,var(--bad) 12%,var(--surface));border-color:var(--bad);color:var(--bad)}
+.cell.head{background:transparent;border-color:transparent;color:var(--faint);padding-bottom:0}
+.zrow{display:grid;grid-template-columns:1.4fr auto .7fr;gap:8px;align-items:stretch;margin:12px 0}
+@media (max-width:760px){.zrow{grid-template-columns:minmax(0,1fr)}}
+.zbox{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px}
+.zbox b{display:block;font-family:var(--f-display);font-size:16px;font-weight:600}
+.zbox p{margin:4px 0 0;font-size:13px;color:var(--muted);max-width:none}
+.zbox.score{border-color:var(--accent);background:var(--accent-soft)}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--faint);font-family:var(--f-mono)}
+.wf{display:grid;grid-template-columns:1.3fr .7fr;gap:8px;margin:12px 0}
+@media (max-width:760px){.wf{grid-template-columns:minmax(0,1fr)}}
+.wf .past,.wf .now{border-radius:10px;padding:14px;min-width:0}
+.wf .past{background:var(--surface-2);border:1px dashed var(--line)}
+.wf .now{background:var(--surface);border:1px solid var(--accent)}
+.wf b{font-family:var(--f-display);font-size:16px;font-weight:600;display:block}
+.wf p{margin:4px 0 0;font-size:13.5px;color:var(--muted);max-width:none}
+.months{display:flex;gap:4px;margin-top:10px}
+.months i{flex:1;height:8px;border-radius:99px;background:var(--line);display:block}
+.months i.on{background:var(--accent)}
+.blank{color:var(--faint);font-family:var(--f-mono)}
+.gates{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px;max-width:68ch}
+.gates li{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14.5px}
+.gates li span{font:500 12px/1.6 var(--f-mono);color:var(--accent)}
+footer{margin-top:42px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;max-width:68ch}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media print{
+  body{background:#fff;color:#000;padding:0}
+  .rail,button.chip{display:none}
+  .shell{display:block;max-width:none}
+  figure,.fx,.void,.call,.age{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="lbl">Modelling</div>
+  <ol>
+    <li><a href="#read"><span>00</span>Clock</a></li>
+    <li><a href="#sample"><span>01</span>Sample</a></li>
+    <li><a href="#pictures"><span>02</span>Pictures</a></li>
+    <li><a href="#level"><span>03</span>Level</a></li>
+    <li><a href="#change"><span>04</span>Change</a></li>
+    <li><a href="#residual"><span>05</span>Residual</a></li>
+    <li><a href="#forward"><span>06</span>Walk-forward</a></li>
+    <li><a href="#checks"><span>07</span>Checks</a></li>
+  </ol>
+</nav>
+<main>
+<header>
+  <div class="eyebrow">Question 3 · Dutch TTF · §05</div>
+  <h1>Fit the level. Then test the change.</h1>
+  <p class="lede">Two regressions on the closed file. Model A is the fair percent spread, given storage. Model B asks whether a storage surprise still moves that spread over the next one, five and ten sessions. The strategy and the backtest are a later note.</p>
+  <div class="meta">
+    <span class="chip">File <b>final_db.csv</b></span>
+    <span class="chip">2,778 sessions</span>
+    <span class="chip">4 Jan 2016 – 7 Oct 2026</span>
+    <button class="chip" type="button" id="theme">Theme</button>
+  </div>
+  <nav class="pipe" aria-label="Order of work">
+    <a class="stage" href="#sample"><div class="h">01</div><div class="t">Sample</div><p class="d">2,774 days once the switch is required.</p></a>
+    <a class="stage" href="#pictures"><div class="h">02</div><div class="t">Pictures</div><p class="d">Curve, correlation, ADF, Engle–Granger.</p></a>
+    <a class="stage" href="#level"><div class="h">03</div><div class="t">Level</div><p class="d">Percent spread. Newey–West, lag 10.</p></a>
+    <a class="stage" href="#change"><div class="h">04</div><div class="t">Change</div><p class="d">Euro move at 1, 5 and 10 sessions.</p></a>
+    <a class="stage" href="#residual"><div class="h">05</div><div class="t">Residual</div><p class="d">Walk-forward z-score and half-life.</p></a>
+    <a class="stage" href="#forward"><div class="h">06</div><div class="t">Forward</div><p class="d">Monthly refit. Three regimes.</p></a>
+  </nav>
+</header>
+
+<section id="read">
+  <h2><span class="n">00</span>What a row already knows</h2>
+  <p class="sub">M1, M2 and M3 are the ICE Endex generics TZT1, TZT2 and TZT3. They stay in the file as settlements. They are not the dependent variables. Every lag below is already in the column. Nothing is shifted again.</p>
+  <div class="clock">
+    <div class="age">
+      <div class="when">This session’s close</div>
+      <b>Settlements</b>
+      <p><code>m1</code> <code>m2</code> <code>m3</code> and the spreads built from them.</p>
+    </div>
+    <div class="age">
+      <div class="when">Issue date, same session</div>
+      <b>Forecast</b>
+      <p><code>fc_hdd_anom7</code>. Empty before 15 Feb 2024. A zero would mean a normal forecast.</p>
+    </div>
+    <div class="age old">
+      <div class="when">One gas day old</div>
+      <b>Realised weather</b>
+      <p><code>hdd_anom7</code> and <code>cdd_anom7</code>. The 6 Oct 2026 observation sits on 7 Oct.</p>
+    </div>
+    <div class="age older">
+      <div class="when">Two gas days old</div>
+      <b>Storage and LNG</b>
+      <p><code>storage_dev</code>, the flows, <code>lng7</code>, <code>lng_dev</code>. A Friday print that lands on Sunday sticks to Monday.</p>
+    </div>
+  </div>
+  <div class="fx">
+    <p class="eq">s12_pct = (M1 − M2) / M2 × 100 &nbsp;&nbsp;·&nbsp;&nbsp; s13_pct = (M1 − M3) / M3 × 100</p>
+    <p class="note">S &lt; 0 is contango. S &gt; 0 is backwardation. The level model uses percent because two euros was noise near €300 and a real gap near €20. The change model stays in €/MWh: the spread h sessions ahead minus the spread today, on the same contracts.</p>
+  </div>
+</section>
+
+<section id="sample">
+  <h2><span class="n">01</span>Sample</h2>
+  <p class="sub">One row is one TTF session on which M1, M2 and M3 all print. The bars below are who is allowed into which regression. A hole stays a hole.</p>
+  <figure>
+    <div class="svgw">
+      <svg viewBox="0 0 760 228" role="img" aria-label="Sample timeline from 2016 to October 2026, with the level sample, the change sample, the forecast sample, and three reporting regimes.">
+        <rect x="108" y="28" width="295" height="148" fill="var(--accent)" opacity=".08"/>
+        <rect x="403" y="28" width="30" height="148" fill="var(--warn)" opacity=".22"/>
+        <rect x="433" y="28" width="103" height="148" fill="var(--backw)" opacity=".13"/>
+        <rect x="536" y="28" width="208" height="148" fill="var(--good)" opacity=".10"/>
+        <text class="ttl" x="118" y="18">2016–2020</text>
+        <text class="ttl" x="448" y="18">Crisis</text>
+        <text class="ttl" x="548" y="18">From Apr 2023</text>
+        <text x="8" y="52">File</text>
+        <rect x="108" y="40" width="636" height="16" rx="3" fill="var(--fg)" opacity=".82"/>
+        <text x="8" y="86">Level</text>
+        <rect x="108" y="74" width="636" height="16" rx="3" fill="var(--accent)"/>
+        <g fill="var(--surface)">
+          <circle cx="241" cy="82" r="3.2"/>
+          <circle cx="343" cy="82" r="3.2"/>
+          <circle cx="361" cy="82" r="3.2"/>
+          <circle cx="419" cy="82" r="3.2"/>
+        </g>
+        <text x="8" y="120">Change</text>
+        <rect x="169" y="108" width="575" height="16" rx="3" fill="var(--backw)"/>
+        <text x="8" y="154">Forecast</text>
+        <rect x="588" y="142" width="156" height="16" rx="3" fill="var(--good)"/>
+        <line x1="108" y1="190" x2="744" y2="190" stroke="var(--line)"/>
+        <g text-anchor="middle">
+          <text x="108" y="208">2016</text>
+          <text x="226" y="208">2018</text>
+          <text x="344" y="208">2020</text>
+          <text x="462" y="208">2022</text>
+          <text x="580" y="208">2024</text>
+          <text x="698" y="208">2026</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>Dots on the level bar are the four sessions missing <code>switch_gap</code>. The change bar opens on 12 Jan 2017, the first <code>surprise7_z</code>. The forecast bar is 15 Feb 2024 through 5 Oct 2026. The narrow band at the start of 2021 is estimated with the rest and is not one of the three regime lines. 2016 is the first estimation window: it sits inside 2016–2020, and it is not scored.</figcaption>
+  </figure>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Use</th><th>Rows</th><th>Rule</th></tr></thead>
+      <tbody>
+        <tr><td>File</td><td class="num">2,778</td><td>Monday 4 Jan 2016 through Wednesday 7 Oct 2026. 52 columns.</td></tr>
+        <tr><td>Model A, both percent spreads</td><td class="num">2,774</td><td>Drop 2 Apr 2018, 26 Dec 2019, 13 Apr 2020 and 5 Apr 2021. Those four miss <code>ttf_switch</code> and <code>switch_gap</code>. The sample still starts 4 Jan 2016.</td></tr>
+        <tr><td>Model B information set</td><td class="num">from 12 Jan 2017</td><td><code>surprise7</code> starts 13 Jan 2016. <code>surprise7_z</code> starts 12 Jan 2017 (266 empty rows before that).</td></tr>
+        <tr><td>h = 5 labels</td><td class="num">647 empty</td><td><code>ds12_fwd5</code> and <code>ds13_fwd5</code> are empty on the same rows. Those rows stay out of the five-day regression.</td></tr>
+        <tr><td>h = 1 and h = 10</td><td class="num">built here</td><td>Same rule as the five-day column. Spread at t+h minus spread at t, and only when <code>roll_day</code> is 0 on every session from t+1 through t+h. A roll on t itself keeps the label: that session is already the new contract.</td></tr>
+        <tr><td>Forecast specification</td><td class="num">15 Feb 2024 – 5 Oct 2026</td><td>Does not replace <code>hdd_anom7</code> on the long sample. Empty on 6–7 Oct 2026 as well. Leave the empties empty.</td></tr>
+        <tr><td>Volatility</td><td class="num">196</td><td><code>vol_m1</code>, <code>vol_m2</code>, <code>vol_m3</code>, <code>sd_ds12</code>, <code>sd_ds13</code>. Last day or two of each contract. A 20-session window still contains a roll almost everywhere else, and the roll-day return was left empty.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="void"><b>Voids the step.</b> Shifting storage, LNG or realised weather by another day, or filling the forecast or the volatility columns so a later regression keeps every row.</p>
+</section>
+
+<section id="pictures">
+  <h2><span class="n">02</span>Pictures and stationarity</h2>
+  <p class="sub">Drawn before any coefficient. The curves below are the layout of those charts, not a fit. If the cloud of <code>s12_pct</code> on <code>storage_dev</code> is flat, the level model has nothing to say.</p>
+  <div class="pair">
+    <figure>
+      <div class="svgw">
+        <svg viewBox="0 0 460 250" role="img" aria-label="Layout of a time chart: front spreads on the left axis, storage deviation on the right, with the crisis shaded.">
+          <rect x="230" y="36" width="78" height="154" fill="var(--backw)" opacity=".14"/>
+          <text x="236" y="50">crisis</text>
+          <line x1="46" y1="196" x2="406" y2="196" stroke="var(--line)"/>
+          <line x1="46" y1="28" x2="46" y2="196" stroke="var(--line)"/>
+          <line x1="406" y1="28" x2="406" y2="196" stroke="var(--line)"/>
+          <path d="M46 150 C90 146, 120 140, 150 132 C190 120, 210 70, 250 58 C290 48, 320 78, 360 110 C390 128, 400 124, 406 120" fill="none" stroke="var(--fg)" stroke-width="2"/>
+          <path d="M46 162 C100 158, 140 150, 180 140 C220 128, 240 96, 270 88 C310 78, 350 108, 406 136" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+          <path d="M46 120 C80 116, 120 100, 160 90 C200 80, 230 40, 270 36 C310 34, 350 70, 406 78" fill="none" stroke="var(--backw)" stroke-width="1.6" stroke-dasharray="4 3"/>
+          <text x="8" y="36">€</text>
+          <text x="412" y="36">pp</text>
+          <text class="ttl" x="226" y="222" text-anchor="middle">s12 and s13, storage deviation on the right</text>
+        </svg>
+      </div>
+      <figcaption>Plot <code>s12</code> and <code>s13</code> from the file, with <code>storage_dev</code> on a second axis. Shade 1 Jul 2021 through 31 Mar 2023. The lines here are a stencil.</figcaption>
+    </figure>
+    <figure>
+      <div class="svgw">
+        <svg viewBox="0 0 360 250" role="img" aria-label="Layout of the working-curve scatter: percent front spread against storage deviation, falling and then flattening.">
+          <line x1="40" y1="28" x2="40" y2="196" stroke="var(--line)"/>
+          <line x1="40" y1="150" x2="332" y2="150" stroke="var(--line)"/>
+          <path d="M48 42 C90 48, 120 62, 150 86 C190 118, 230 138, 320 146" fill="none" stroke="var(--fg)" stroke-width="2"/>
+          <g fill="var(--backw)">
+            <circle cx="70" cy="56" r="3.5"/><circle cx="96" cy="64" r="3.5"/><circle cx="118" cy="78" r="3.5"/>
+          </g>
+          <g fill="var(--accent)">
+            <circle cx="168" cy="108" r="3.5"/><circle cx="198" cy="124" r="3.5"/><circle cx="230" cy="134" r="3.5"/>
+          </g>
+          <g fill="var(--contango)">
+            <circle cx="150" cy="128" r="3.5"/><circle cx="186" cy="140" r="3.5"/><circle cx="250" cy="152" r="3.5"/><circle cx="290" cy="156" r="3.5"/>
+          </g>
+          <text x="8" y="24">S%</text>
+          <text x="186" y="214" text-anchor="middle">storage deviation</text>
+          <text x="48" y="146">0</text>
+          <text class="ttl" x="186" y="236" text-anchor="middle">Colour is the delivery month of M1</text>
+        </svg>
+      </div>
+      <figcaption>October and November, drawn in blue, cross from summer gas into winter and sit toward contango. That is a calendar effect. January is the base month: the session on which <code>d_feb</code> through <code>d_dec</code> are all zero. Month dummies follow the delivery month of M1, not the date of the trade.</figcaption>
+    </figure>
+  </div>
+  <div class="call warn">
+    <b>Heating demand, withdrawals and the stock level move together.</b>
+    <p>Correlate <code>storage_dev</code>, <code>storage_dev_sq</code>, <code>hdd_anom7</code>, <code>lng_dev</code>, <code>switch_gap</code>, <code>inj_util</code>, and beside them <code>wd_util</code> and <code>net_inj</code>, on the 2,774 sessions. A sign that later flips inside that block is collinearity.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Test</th><th>Series</th><th>How to read it</th></tr></thead>
+      <tbody>
+        <tr><td>ADF, constant, lag by AIC</td><td><code>s12_pct</code>, <code>s13_pct</code>, <code>storage_dev</code></td><td>On the percent spreads, not the euro spreads.</td></tr>
+        <tr><td>Engle–Granger</td><td>Each percent spread on a constant and <code>storage_dev</code></td><td>ADF the residual. Use Engle–Granger critical values. Ordinary ADF critical values on a residual that was just estimated make cointegration look stronger than it is.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>A stationary residual is what would let a mispricing close. No coefficient is reported from this step.</p>
+  <p class="void"><b>Voids the step.</b> Treating a sign flip between two of those correlated features as a new story.</p>
+</section>
+
+<section id="level">
+  <h2><span class="n">03</span>Model A, fair value</h2>
+  <p class="sub">OLS on the 2,774 sessions. Newey–West standard errors, maximum lag 10, because the daily residual is autocorrelated. The same right-hand side for <code>s13_pct</code>. This table is the specification. A coefficient attached to a trading day comes from the walk-forward.</p>
+  <div class="fx">
+    <p class="eq">s12_pct<sub>t</sub> = α + β<sub>1</sub> storage_dev<sub>t</sub> + β<sub>2</sub> storage_dev_sq<sub>t</sub> + β<sub>3</sub> hdd_anom7<sub>t</sub></p>
+    <p class="eq">+ β<sub>4</sub> lng_dev<sub>t</sub> + β<sub>5</sub> switch_gap<sub>t</sub> + β<sub>7</sub> inj_util<sub>t</sub> + Σ γ<sub>m</sub> D<sub>m</sub> + δ crisis<sub>t</sub> + ε<sub>t</sub></p>
+    <p class="note">January has no dummy. <code>crisis</code> is 1 from 1 Jul 2021 through 31 Mar 2023. β<sub>6</sub> would have been σ of M1. It is omitted. Estimate the same equation a second time without <code>crisis</code> and put the two tables side by side. The baseline keeps the dummy.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Term</th><th>Sign storage implies</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><code>storage_dev</code></td><td class="down">β<sub>1</sub> &lt; 0</td><td>Gas above the seasonal normal takes the premium out of the front month. The curve moves toward contango.</td></tr>
+        <tr><td><code>storage_dev_sq</code></td><td class="up">β<sub>2</sub> &gt; 0</td><td>The curve steepens when storage is short and flattens near the carry floor.</td></tr>
+        <tr><td><code>hdd_anom7</code></td><td class="up">β<sub>3</sub> &gt; 0</td><td>Colder weather hits the front month first.</td></tr>
+        <tr><td><code>lng_dev</code></td><td class="down">β<sub>4</sub> &lt; 0</td><td>More send-out is supply into the front month.</td></tr>
+        <tr><td><code>switch_gap</code></td><td class="down">β<sub>5</sub> ≤ 0</td><td>Gas dearer than coal: power burns less gas, so M1 weakens against M2.</td></tr>
+        <tr><td><code>inj_util</code></td><td class="down">β<sub>7</sub> &lt; 0</td><td>Tanks that cannot take more gas force the front month to clear lower.</td></tr>
+        <tr><td>σ of M1</td><td class="up">omitted</td><td>Filled on 196 sessions. Adding it here would replace the long sample with those 196 days. A coefficient on that subset is a side note, with 196 in the heading.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Write the sign the data produce. A wrong sign stays in the table. Lags of these regressors wait until this contemporaneous equation is written down.</p>
+  <div class="call">
+    <b>AGSI in the file is the revised history.</b>
+    <p>The storage coefficient is a little kinder than the number a trader saw that evening. Days with <code>agsi_estimated</code> equal to 1 stay in the sample. Say this next to β<sub>1</sub>.</p>
+  </div>
+  <h3>Beside the baseline, not instead of it</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Specification</th><th>Sample</th><th>Weather term</th></tr></thead>
+      <tbody>
+        <tr><td>Baseline</td><td>2,774 sessions</td><td><code>hdd_anom7</code></td></tr>
+        <tr><td>Forecast</td><td>15 Feb 2024 – 5 Oct 2026, where the cell is filled</td><td><code>fc_hdd_anom7</code> in that slot. Same other regressors.</td></tr>
+        <tr><td>Volatility side note</td><td>196 sessions</td><td>Baseline plus <code>vol_m1</code>. Not the model.</td></tr>
+        <tr><td>After the OLS</td><td>The level sample</td><td>Optional curve, S% = a + b · exp(−c · storage_dev), and a tree. The linear model is the one to defend. Ten years of daily data will let a flexible model memorise 2022.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="void"><b>Voids the step.</b> Putting <code>vol_m1</code> into the 2,774-session regression, or dropping a term because its sign disagrees with the table.</p>
+</section>
+
+<section id="change">
+  <h2><span class="n">04</span>Model B, the change</h2>
+  <p class="sub">For h = 1, 5 and 10. The label is in €/MWh. The regressors do not change with h. There is no full-sample table: z<sub>t</sub> is a walk-forward residual, so the coefficients are estimated in the next section, on earlier rows only. Newey–West, maximum lag 10, at each horizon.</p>
+  <div class="fx">
+    <p class="eq">(s12<sub>t+h</sub> − s12<sub>t</sub>) = a + b · surprise7_z<sub>t</sub> + c · Δhdd_anom7<sub>t</sub> + d · z<sub>t</sub> + u<sub>t</sub></p>
+    <p class="note">The same equation for M1 minus M3, with the walk-forward residual of <code>s13_pct</code> and the <code>ds13</code> labels. h = 5 uses <code>ds12_fwd5</code> and <code>ds13_fwd5</code> as they stand. Implied signs: b &lt; 0, more injection than the weather and the stock suggested cheapens M1 against M2; d &lt; 0, a spread that is already rich tends to fall back. A b that is still present at 5 or at 10 days means the market is slow. A wrong sign is reported.</p>
+  </div>
+  <p>Δhdd_anom7 is the session-to-session change in the <code>hdd_anom7</code> column already stored. z<sub>t</sub> uses a Model A fit through t−1 and a window of 60 residuals that ends at t−1. Both are known at the close of t. Today’s settlement enters only as the spread being scored.</p>
+  <div class="rolls" aria-label="When a forward label is left empty">
+    <div class="roll">
+      <div class="who"></div>
+      <div class="cell head">t<small>today</small></div>
+      <div class="cell head">t+1</div>
+      <div class="cell head">t+2</div>
+      <div class="cell head">t+3</div>
+      <div class="cell head">t+4</div>
+      <div class="cell head">t+5</div>
+    </div>
+    <div class="roll">
+      <div class="who">Roll today: kept</div>
+      <div class="cell on">roll<small>new contract</small></div>
+      <div class="cell">·</div>
+      <div class="cell">·</div>
+      <div class="cell">·</div>
+      <div class="cell">·</div>
+      <div class="cell on">kept</div>
+    </div>
+    <div class="roll">
+      <div class="who">Roll inside: empty</div>
+      <div class="cell">·</div>
+      <div class="cell">·</div>
+      <div class="cell">·</div>
+      <div class="cell bad">roll</div>
+      <div class="cell">·</div>
+      <div class="cell bad">empty</div>
+    </div>
+  </div>
+  <p>The window is every session from t+1 through t+h. The same cut builds h = 1 and h = 10, and it is why 647 five-day labels are already empty. A row also stays empty when t+h is past 7 Oct 2026. An empty label is not a zero, and it is not a feature.</p>
+  <p class="void"><b>Voids the step.</b> Scoring a change that crosses a roll. That change is a change of contract, not a forecast error.</p>
+</section>
+
+<section id="residual">
+  <h2><span class="n">05</span>Residual and half-life</h2>
+  <p class="sub">From the walk-forward fitted value. The residual of a regression fit to the whole file is not an input. The same construction for <code>s13_pct</code>.</p>
+  <div class="fx">
+    <p class="eq">e<sub>t</sub> = s12_pct<sub>t</sub> − fitted<sub>t</sub></p>
+    <p class="eq">z<sub>t</sub> = (e<sub>t</sub> − mean of the previous 60 e) / stdev of those 60</p>
+    <p class="eq">e<sub>t</sub> = φ e<sub>t−1</sub> + η<sub>t</sub> &nbsp;→&nbsp; half-life = −ln 2 / ln φ</p>
+    <p class="note">The 60 residuals are the ones priced before t. The residual being scored sits outside that window. A missing residual stays missing. The z-score therefore starts on the 61st walk-forward residual. Inside each regime, estimate φ on those walk-forward residuals. When φ is between 0 and 1, report the half-life in sessions next to φ. Otherwise report φ and leave the half-life blank.</p>
+  </div>
+  <div class="zrow">
+    <div class="zbox">
+      <b>Previous 60 residuals</b>
+      <p>Mean and standard deviation. Ends at t−1. Holes are not filled with zero.</p>
+    </div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="zbox score">
+      <b>e<sub>t</sub></b>
+      <p>Scored against that window. This is z<sub>t</sub>.</p>
+    </div>
+  </div>
+  <figure>
+    <div class="svgw">
+      <svg viewBox="0 0 680 230" role="img" aria-label="Illustrative decay of a residual, halving before a vertical line at 30 sessions.">
+        <line x1="48" y1="186" x2="640" y2="186" stroke="var(--line)"/>
+        <line x1="48" y1="28" x2="48" y2="186" stroke="var(--line)"/>
+        <line x1="48" y1="110" x2="640" y2="110" stroke="var(--line)" stroke-dasharray="4 4"/>
+        <line x1="344" y1="28" x2="344" y2="186" stroke="var(--warn)" stroke-dasharray="4 3"/>
+        <path d="M48 40 C80 52, 110 78, 140 110 C176 142, 220 158, 280 168 C360 178, 480 182, 640 184" fill="none" stroke="var(--fg)" stroke-width="2"/>
+        <circle cx="140" cy="110" r="4" fill="var(--accent)"/>
+        <text x="52" y="24">|e|</text>
+        <text x="56" y="106">half</text>
+        <text x="352" y="42">30 sessions</text>
+        <text x="48" y="204">0</text>
+        <text x="600" y="204">sessions</text>
+        <text class="ttl" x="344" y="222" text-anchor="middle">A half-life past this line is slower than the front month</text>
+      </svg>
+    </div>
+    <figcaption>Stencil of the decay, not an estimate. M1 expires every month. A half-life above roughly 30 sessions does not close inside the contract that produced it.</figcaption>
+  </figure>
+  <p class="void"><b>Voids the step.</b> Estimating φ on the residuals of a full-sample fit.</p>
+</section>
+
+<section id="forward">
+  <h2><span class="n">06</span>Walk-forward</h2>
+  <p class="sub">Expanding window, refit on the first session of each calendar month, on every valid row strictly before that session. Hold the coefficients until the next refit. Past residuals stay the residuals that were priced at the time.</p>
+  <div class="wf">
+    <div class="past">
+      <b>Sample for the refit</b>
+      <p>Everything valid before the first session of the month. The first refit is the first session of January 2017, so every delivery month has already appeared. Sessions in 2016 have no walk-forward fitted value.</p>
+      <div class="months" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="now">
+      <b>Days priced this month</b>
+      <p>One set of coefficients. Day t is outside the fit. Model B uses the same calendar, and its first refit waits until 60 rows have a label, <code>surprise7_z</code>, Δhdd and z.</p>
+      <div class="months" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+    </div>
+  </div>
+  <p>The 2016–2020 line is the scored sessions from January 2017 through December 2020. Sessions from 1 Jan 2021 through 30 Jun 2021 stay in the estimation sample and receive no regime line. R² is 1 minus the residual sum of squares divided by the sum of squares around the mean of the dependent variable inside that regime. A negative R² means the walk-forward fit loses to that mean.</p>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>Regime</th><th>Scored</th><th>R²</th><th>RMSE</th><th>5-day sign</th><th>Half-life</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2016–2020</td><td>Jan 2017 – Dec 2020</td><td class="blank">—</td><td class="blank">%</td><td class="blank">share</td><td class="blank">sessions</td></tr>
+        <tr><td>Crisis</td><td>1 Jul 2021 – 31 Mar 2023</td><td class="blank">—</td><td class="blank">%</td><td class="blank">share</td><td class="blank">sessions</td></tr>
+        <tr><td>After</td><td>1 Apr 2023 – 7 Oct 2026</td><td class="blank">—</td><td class="blank">%</td><td class="blank">share</td><td class="blank">sessions</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Level RMSE is in percent, for <code>s12_pct</code> and again for <code>s13_pct</code>. The five-day sign is the share of filled <code>ds12_fwd5</code> rows on which e<sub>t</sub> and the five-day move have opposite signs. A zero residual or a zero move is counted separately and stays out of the share.</p>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>Regime</th><th>h = 1</th><th>h = 5</th><th>h = 10</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2017–2020</td><td class="blank">R², RMSE €</td><td class="blank">R², RMSE €, sign hit</td><td class="blank">R², RMSE €</td></tr>
+        <tr><td>Crisis</td><td class="blank">R², RMSE €</td><td class="blank">R², RMSE €, sign hit</td><td class="blank">R², RMSE €</td></tr>
+        <tr><td>After</td><td class="blank">R², RMSE €</td><td class="blank">R², RMSE €, sign hit</td><td class="blank">R², RMSE €</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The sign hit at h = 5 is the share of rows on which the fitted change and <code>ds12_fwd5</code> have the same sign. RMSE of the change is in €/MWh. Write the same block for the M1/M3 change. Cells stay blank until the walk-forward is run. An in-sample R² does not go in this table.</p>
+  <h3>What may enter, and when</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Columns</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><code>storage_dev</code> <code>storage_dev_sq</code> <code>hdd_anom7</code> <code>lng_dev</code> <code>switch_gap</code> <code>inj_util</code> <code>d_feb</code>…<code>d_dec</code> <code>crisis</code></td><td><span class="tag t-in">Model A</span></td></tr>
+        <tr><td><code>surprise7_z</code>, the stored change in <code>hdd_anom7</code>, z from Model A</td><td><span class="tag t-in">Model B</span></td></tr>
+        <tr><td><code>s12_pct</code> <code>s13_pct</code></td><td><span class="tag t-label">Level targets</span></td></tr>
+        <tr><td><code>ds12</code> and <code>ds13</code> at h = 1, 5, 10</td><td><span class="tag t-label">Labels only</span></td></tr>
+        <tr><td><code>fc_hdd_anom7</code></td><td><span class="tag t-later">Second specification, short sample</span></td></tr>
+        <tr><td><code>vol_m1</code></td><td><span class="tag t-later">Side note, 196 sessions</span></td></tr>
+        <tr><td><code>vol_m2</code> <code>vol_m3</code> <code>sd_ds12</code> <code>sd_ds13</code></td><td><span class="tag t-out">Out of every long regression</span></td></tr>
+        <tr><td><code>cdd_anom7</code> <code>lng7</code> <code>wd_util</code> <code>net_inj</code> <code>full</code> <code>full_norm5y</code> <code>inj_season</code> <code>roll_day</code> <code>dte</code> <code>s23</code> <code>s23_pct</code></td><td><span class="tag t-later">Only if out-of-sample RMSE falls</span></td></tr>
+        <tr><td><code>m1</code> <code>m2</code> <code>m3</code> <code>s12</code> <code>s13</code></td><td><span class="tag t-out">Raw inputs. Not regressors in the equation of the spread they define.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><code>inj_season</code> is April–September of the trading date. It is not in the baseline. The forecast specification is walked forward on its own sample, after one year of filled rows, and it does not replace the long-sample table. <code>switch_gap</code> still drops the four missing sessions.</p>
+  <div class="call warn">
+    <b><code>sendout_bad</code> is true on 7 Oct 2026 only.</b>
+    <p>That is the lagged flag for 5 Oct 2026, the LNG print replaced with the prior 30-day median before <code>lng7</code> was summed. A result that appears only when that filled day sits inside the seven-day LNG window is not quoted.</p>
+  </div>
+  <p class="void"><b>Voids the step.</b> Pricing day t with a fit estimated on a sample that includes day t, or publishing one R² for the whole file.</p>
+</section>
+
+<section id="checks">
+  <h2><span class="n">07</span>Before a coefficient is quoted</h2>
+  <p class="sub">Six gates. A number that fails one of them is not a result.</p>
+  <ol class="gates">
+    <li><span>01</span>No row uses a lag that was not already in the file.</li>
+    <li><span>02</span>No label crosses a roll.</li>
+    <li><span>03</span>Volatility is not inside the long-sample regression.</li>
+    <li><span>04</span><code>fc_hdd_anom7</code> is not filled, and it is not on the long sample.</li>
+    <li><span>05</span>The reported fit for day t was estimated through t−1.</li>
+    <li><span>06</span>The three regimes are shown separately.</li>
+  </ol>
+</section>
+
+<footer>
+  Specification: §05 of <cite>TTF Spread Storage Model</cite>. Column meanings: <cite>Database Columns</cite>. Sample: <code>3. Final_DB/final_db.csv</code>. The empty cells are the walk-forward report. They are filled by the fit, not by this page.
+</footer>
+</main>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var themeBtn = document.getElementById("theme");
+  var saved = null;
+  try { saved = localStorage.getItem("ttf-theme"); } catch (e) {}
+  if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
+  function label() {
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (root.getAttribute("data-theme") !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+    themeBtn.textContent = dark ? "Light" : "Dark";
+  }
+  label();
+  themeBtn.addEventListener("click", function () {
+    var dark = themeBtn.textContent === "Dark";
+    root.setAttribute("data-theme", dark ? "dark" : "light");
+    try { localStorage.setItem("ttf-theme", dark ? "dark" : "light"); } catch (e) {}
+    label();
+  });
+  var links = Array.prototype.slice.call(document.querySelectorAll(".rail a"));
+  var byId = {};
+  links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        links.forEach(function (a) { a.classList.remove("on"); });
+        var hit = byId[en.target.id];
+        if (hit) hit.classList.add("on");
+      });
+    }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+    document.querySelectorAll("main section").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>

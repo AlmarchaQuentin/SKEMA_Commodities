@@ -1,0 +1,465 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "check": "Unique chronological sessions",
+      "status": "passed",
+      "detail": "2778"
+    },
+    {
+      "check": "Three euro spreads reconcile",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Complete daily risk estimates in study sample",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Unverified source mappings remain explicit",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Expiry independent of truncated dataset end",
+      "status": "passed",
+      "detail": "2026-10-29, 16 UK business days"
+    },
+    {
+      "check": "Delivery MWh hours 2024-02",
+      "status": "passed",
+      "detail": "696"
+    },
+    {
+      "check": "Delivery MWh hours 2024-03",
+      "status": "passed",
+      "detail": "743"
+    },
+    {
+      "check": "Delivery MWh hours 2024-10",
+      "status": "passed",
+      "detail": "745"
+    },
+    {
+      "check": "Delivery MWh hours 2025-02",
+      "status": "passed",
+      "detail": "672"
+    },
+    {
+      "check": "storage available before signal",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "lng available before signal",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "flow available before signal",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "wx available before signal",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "fc available before signal",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "storage declared safety lag",
+      "status": "passed",
+      "detail": "2 calendar days"
+    },
+    {
+      "check": "lng declared safety lag",
+      "status": "passed",
+      "detail": "2 calendar days"
+    },
+    {
+      "check": "flow declared safety lag",
+      "status": "passed",
+      "detail": "6 calendar days"
+    },
+    {
+      "check": "wx declared safety lag",
+      "status": "passed",
+      "detail": "6 calendar days"
+    },
+    {
+      "check": "fc declared safety lag",
+      "status": "passed",
+      "detail": "1 calendar days"
+    },
+    {
+      "check": "Causal risk spot check s12 2019-01-03",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Causal risk spot check s23 2019-01-03",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Causal risk spot check s13 2019-01-03",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Causal risk spot check s12 2022-02-24",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Causal risk spot check s23 2022-02-24",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Causal risk spot check s13 2022-02-24",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Causal risk spot check s12 2026-10-07",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Causal risk spot check s23 2026-10-07",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Causal risk spot check s13 2026-10-07",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Trade eligibility horizon 1",
+      "status": "passed",
+      "detail": "2518"
+    },
+    {
+      "check": "Trade endpoints horizon 1",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Execution-aligned target s12 horizon 1",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Execution-aligned target s23 horizon 1",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Execution-aligned target s13 horizon 1",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "No target beyond sample horizon 1",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Trade eligibility horizon 5",
+      "status": "passed",
+      "detail": "1998"
+    },
+    {
+      "check": "Trade endpoints horizon 5",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Execution-aligned target s12 horizon 5",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Execution-aligned target s23 horizon 5",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Execution-aligned target s13 horizon 5",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "No target beyond sample horizon 5",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Trade eligibility horizon 10",
+      "status": "passed",
+      "detail": "1353"
+    },
+    {
+      "check": "Trade endpoints horizon 10",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Execution-aligned target s12 horizon 10",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Execution-aligned target s23 horizon 10",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Execution-aligned target s13 horizon 10",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "No target beyond sample horizon 10",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Unique model predictions",
+      "status": "passed",
+      "detail": "60561"
+    },
+    {
+      "check": "Training labels completed before refit",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Refit precedes every signal",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Training rows precede signal",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Training warm-up",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Forecast triangle identity",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "No-change benchmark",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Scored model target s12 horizon 1",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Scored model target s13 horizon 1",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Scored model target s23 horizon 1",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Scored model target s12 horizon 5",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Scored model target s13 horizon 5",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Scored model target s23 horizon 5",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Scored model target s12 horizon 10",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Scored model target s13 horizon 10",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Scored model target s23 horizon 10",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Unique strategy trades",
+      "status": "passed",
+      "detail": "3544"
+    },
+    {
+      "check": "Signal threshold uses assumed roundtrip cost",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Equal-MWh hedge in both delivery legs",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Two-leg cash profit reconciles",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Spread profit reconciles",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Signal-day risk s12",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Predetermined position size s12",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Predetermined signal threshold s12",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Signal-day risk s13",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Predetermined position size s13",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Predetermined signal threshold s13",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Signal-day risk s23",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Predetermined position size s23",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Predetermined signal threshold s23",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "No overlapping standalone trades",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Next-session execution and exact holding period",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Every trade keeps its delivery contracts",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "All cost scenarios keep the same trades",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Roundtrip costs charge both legs twice",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Net trade cash profit",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Unique daily account observations",
+      "status": "passed",
+      "detail": "220014"
+    },
+    {
+      "check": "Daily net profit",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "All trade cash totals reconcile to daily accounts",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Published metrics reconcile to cash totals",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Every daily equity and drawdown path reconciles",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "No-change accounts remain flat",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Capital exhaustion does not produce a valid Sharpe",
+      "status": "passed",
+      "detail": "4 scenarios exhaust capital"
+    },
+    {
+      "check": "Capital exhaustion is explicitly reported",
+      "status": "passed",
+      "detail": ""
+    },
+    {
+      "check": "Account metrics have unique keys",
+      "status": "passed",
+      "detail": "360"
+    }
+  ],
+  "rows": 2778,
+  "predictions": 60561,
+  "standalone_trades": 3544,
+  "daily_account_records": 220014,
+  "cost_scenarios_exhausting_capital": 4
+}

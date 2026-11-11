@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TTF database columns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --bg:#f4f6f8; --surface:#ffffff; --surface-2:#e8eef3; --line:#d2dbe3;
+  --fg:#14202b; --muted:#52616e; --faint:#84919c;
+  --accent:#1a56b0; --accent-soft:#e4edf8;
+  --contango:#2a74cc; --backw:#c85a28;
+  --good:#2a7d4f; --warn:#9a6b12; --bad:#b33832;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e141a; --surface:#151d25; --surface-2:#1c2732; --line:#2c3a48;
+  --fg:#e4ebf1; --muted:#9aabba; --faint:#6e7e8c;
+  --accent:#79adf2; --accent-soft:#1a2c42;
+  --contango:#6aabf0; --backw:#f09262;
+  --good:#63c48c; --warn:#e3b45a; --bad:#f08a84;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e141a; --surface:#151d25; --surface-2:#1c2732; --line:#2c3a48;
+  --fg:#e4ebf1; --muted:#9aabba; --faint:#6e7e8c;
+  --accent:#79adf2; --accent-soft:#1a2c42;
+  --contango:#6aabf0; --backw:#f09262;
+  --good:#63c48c; --warn:#e3b45a; --bad:#f08a84;
+  color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-padding-top:18px}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;padding:0 18px 64px}
+.shell{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:176px minmax(0,1fr);gap:36px}
+@media (max-width:860px){.shell{grid-template-columns:minmax(0,1fr)}.rail{display:none}}
+.rail{position:sticky;top:0;align-self:start;padding-top:32px;max-height:100vh;overflow:auto}
+.rail .lbl{font:500 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.rail ol{list-style:none;margin:0;padding:0}
+.rail a{display:flex;gap:8px;padding:6px 8px;border-radius:6px;color:var(--muted);text-decoration:none;font-size:13.5px}
+.rail a span{font-family:var(--f-mono);color:var(--faint);font-size:11px;padding-top:3px;min-width:1.4em}
+.rail a:hover,.rail a.on,.rail a:focus-visible{background:var(--surface-2);color:var(--fg);outline:none}
+.rail a.on span{color:var(--accent)}
+main{min-width:0;padding-top:32px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.02;letter-spacing:-.02em;margin:10px 0 12px;max-width:20ch}
+.lede{color:var(--muted);max-width:64ch;margin:0;font-size:17px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;align-items:center}
+.chip{font:500 12px/1 var(--f-mono);padding:7px 10px;border-radius:999px;background:var(--surface);color:var(--muted);border:1px solid var(--line)}
+.chip b{color:var(--fg);font-weight:500}
+button.chip{cursor:pointer;color:var(--accent);font-family:var(--f-mono)}
+section{padding-top:42px;scroll-margin-top:16px}
+h2{font-family:var(--f-display);font-weight:600;font-size:26px;line-height:1.1;margin:0 0 6px;display:flex;gap:10px;align-items:baseline}
+h2 .n{font-family:var(--f-mono);font-size:13px;color:var(--accent);font-weight:500}
+p{margin:0 0 10px;max-width:68ch}
+.sub{color:var(--muted);max-width:68ch}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:640px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px/1.3 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);font-size:12.5px;white-space:nowrap}
+td.unit{font-family:var(--f-mono);font-size:12.5px;white-space:nowrap;color:var(--muted)}
+.tag{display:inline-block;font:500 11px/1 var(--f-mono);padding:3px 6px;border-radius:5px;white-space:nowrap}
+.t-target{background:color-mix(in srgb,var(--backw) 16%,transparent);color:var(--backw)}
+.t-feat{background:var(--accent-soft);color:var(--accent)}
+.t-key{background:color-mix(in srgb,var(--backw) 10%,var(--accent-soft));color:var(--accent)}
+.t-ctrl{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.t-flag{background:var(--surface-2);color:var(--muted)}
+.t-raw{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.fx{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0 12px;overflow-x:auto}
+.fx p{font-family:var(--f-mono);font-size:13.5px;line-height:1.7;margin:0;white-space:nowrap}
+.fx .note{font-family:var(--f-body);font-size:13.5px;color:var(--muted);margin-top:6px;max-width:68ch;white-space:normal}
+.call{border-left:3px solid var(--bad);background:color-mix(in srgb,var(--bad) 8%,var(--surface));padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;max-width:68ch}
+.call b{font-family:var(--f-display);font-weight:600}
+.call p{margin:2px 0 0}
+.call.info{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+footer{margin-top:42px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;max-width:68ch}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media print{
+  body{background:#fff;color:#000;padding:0}
+  .rail,button.chip{display:none}
+  .shell{display:block;max-width:none}
+  .call,.fx,tr{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<aside class="call warn" style="max-width:1120px;margin:16px auto;padding:12px;border:1px solid var(--line)"><b>Original design record.</b> The implemented data timing, models and measured results are described in <a href="Project%20Change%20Log.html">Project Change Log</a>, dated 16 October 2026. That update supersedes conflicting instructions and illustrative results on this page.</aside>
+<div class="shell">
+<nav class="rail" aria-label="Contents">
+  <div class="lbl">Columns</div>
+  <ol>
+    <li><a href="#read"><span>00</span>Reading</a></li>
+    <li><a href="#identity"><span>01</span>Identity</a></li>
+    <li><a href="#targets"><span>02</span>Targets</a></li>
+    <li><a href="#risk"><span>03</span>Risk</a></li>
+    <li><a href="#storage"><span>04</span>Storage</a></li>
+    <li><a href="#weather"><span>05</span>Weather</a></li>
+    <li><a href="#calendar"><span>06</span>Calendar</a></li>
+  </ol>
+</nav>
+<main>
+<header>
+  <div class="eyebrow">Question 3 · Dutch TTF · Columns</div>
+  <h1>What each column in the final database is.</h1>
+  <p class="lede">One row of <code>3. Final_DB/final_db.csv</code> is one TTF session. The lags are already in the numbers. The columns below are the ones in the file, in the order they appear.</p>
+  <div class="meta">
+    <span class="chip">File <b>final_db.csv</b></span>
+    <span class="chip">Rows <b>2,778</b></span>
+    <span class="chip">Columns <b>52</b></span>
+    <button class="chip" type="button" id="theme">Theme</button>
+  </div>
+</header>
+
+<section id="read">
+  <h2><span class="n">00</span>How to read a row</h2>
+  <p class="sub">M1, M2 and M3 are the ICE Endex generics <code>TZT1</code>, <code>TZT2</code> and <code>TZT3</code>. Storage and LNG are known two gas days after the day they describe. Realised weather is known the next day. The forecast is the issue date itself. Prices are the settlement of that session.</p>
+  <div class="fx">
+    <p>S &lt; 0 &nbsp; contango &nbsp;&nbsp;·&nbsp;&nbsp; S &gt; 0 &nbsp; backwardation</p>
+    <p class="note">A positive <code>surprise7</code> means more gas went into storage than the weather and the stock implied. That is bearish for the front spread. <code>consumption</code>, <code>consumptionFull</code>, <code>trend</code> and the contract-code columns are not in the file.</p>
+  </div>
+</section>
+
+<section id="identity">
+  <h2><span class="n">01</span>Identity</h2>
+  <p class="sub">These say which session the row is, and where that session sits inside the front-month contract.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Column</th><th>What it is</th><th>Unit</th></tr></thead>
+      <tbody>
+        <tr><td class="num">date</td><td>The TTF trading day. The index of the file, from Monday 4 January 2016 through Wednesday 7 October 2026. A session is kept only when M1, M2 and M3 all print.</td><td class="unit">date</td></tr>
+        <tr><td class="num">roll_day</td><td>1 on the first session of a new front month, 0 otherwise. The generic has changed contract, so a return or a spread change on this day is not a move in one market.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">dte</td><td>Business days from this session to the expiry of M1, counted down inside the current contract. Expiry is two business days before the first calendar day of the delivery month.</td><td class="unit">days</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="targets">
+  <h2><span class="n">02</span>Prices and targets</h2>
+  <p class="sub">The outrights stay because volatility and the coal–gas switch are built from them. The dependent variables are the spreads.</p>
+  <div class="fx">
+    <p>s12 = M1 − M2 &nbsp;&nbsp; s13 = M1 − M3 &nbsp;&nbsp; s23 = M2 − M3</p>
+    <p>s12_pct = s12 / M2 × 100 &nbsp;&nbsp; s13_pct = s13 / M3 × 100 &nbsp;&nbsp; s23_pct = s23 / M3 × 100</p>
+    <p class="note">The level model uses the percent spreads. Two euros was noise near €300 and a real gap near €20.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Column</th><th>What it is</th><th>Unit</th></tr></thead>
+      <tbody>
+        <tr><td class="num">m1</td><td>Settlement of the front month, <code>TZT1</code>. A raw input, not a target.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">m2</td><td>Settlement of the second month, <code>TZT2</code>. Denominator of <code>s12_pct</code>.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">m3</td><td>Settlement of the third month, <code>TZT3</code>. Denominator of <code>s13_pct</code> and <code>s23_pct</code>.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">s12</td><td>M1 minus M2. The front spread in euros. Negative is contango.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">s13</td><td>M1 minus M3.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">s23</td><td>M2 minus M3. The spread between the two deferred months.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">s12_pct</td><td>The front spread as a percent of M2. This is the series the level model fits.</td><td class="unit">%</td></tr>
+        <tr><td class="num">s13_pct</td><td>M1 minus M3, as a percent of M3.</td><td class="unit">%</td></tr>
+        <tr><td class="num">s23_pct</td><td>M2 minus M3, as a percent of M3.</td><td class="unit">%</td></tr>
+        <tr><td class="num">ds12_fwd5</td><td>The front spread five sessions ahead minus the front spread today, on the same contracts. A label for the change model. Empty when a roll falls inside those five sessions, and empty on the last days of the file, where the future session does not exist yet. 647 rows are empty.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">ds13_fwd5</td><td>The same five-session change for M1 minus M3. Empty on the same rows as <code>ds12_fwd5</code>.</td><td class="unit">€/MWh</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="risk">
+  <h2><span class="n">03</span>Risk and the coal–gas switch</h2>
+  <p class="sub">Volatility and the spread standard deviation need 20 same-contract observations. A roll blanks that day’s return, and a front month lasts about 20 sessions, so the window is clean only at the end of the contract.</p>
+  <div class="call info">
+    <b>196 sessions have a volatility number.</b>
+    <p>The other 2,582 are empty on purpose. Putting <code>vol_m1</code> into the level regression would keep only those 196 days. Leave the five columns out of the long sample.</p>
+  </div>
+  <div class="fx">
+    <p>ttf_switch = (0.52 / 0.38) · (Coal + 0.341 · EUA) − 0.202 · EUA</p>
+    <p class="note">Coal is already €/MWh thermal: API2 in $/t, divided by EUR/USD and by 6.978. Efficiencies are 52% for a gas plant and 38% for coal. Emission factors are 0.202 and 0.341 tCO₂ per MWh thermal.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Column</th><th>What it is</th><th>Unit</th></tr></thead>
+      <tbody>
+        <tr><td class="num">vol_m1</td><td>Annualised volatility of M1: the standard deviation of the last 20 log returns, times √252, times 100. The return on <code>roll_day</code> is excluded. Filled on 196 sessions, the last day or two of each contract.</td><td class="unit">%</td></tr>
+        <tr><td class="num">vol_m2</td><td>The same volatility for M2. Same 196 sessions.</td><td class="unit">%</td></tr>
+        <tr><td class="num">vol_m3</td><td>The same volatility for M3. Same 196 sessions. M1 should sit above M2, and M2 above M3.</td><td class="unit">%</td></tr>
+        <tr><td class="num">sd_ds12</td><td>Standard deviation of the daily change in <code>s12</code> over the last 20 sessions. The change on a roll day is excluded, so the column is empty on the same rows as the volatilities. It is a scale for a position, not a daily regressor.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">sd_ds13</td><td>The same 20-session standard deviation for the daily change in <code>s13</code>.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">ttf_switch</td><td>The coal-to-gas switching price. Below this level, a gas plant burns ahead of a coal plant. Empty on the four sessions where EUA did not print.</td><td class="unit">€/MWh</td></tr>
+        <tr><td class="num">switch_gap</td><td>M1 minus <code>ttf_switch</code>. Positive means gas is the more expensive fuel in power, so burn falls and the front month should cheapen against M2. Empty on the same four sessions.</td><td class="unit">€/MWh</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="storage">
+  <h2><span class="n">04</span>Storage and the flow surprise</h2>
+  <p class="sub">Every storage column is lagged two gas days. A Friday print that lands on Sunday sticks to Monday. The level is percent full, because working-gas volume has roughly doubled since 2011.</p>
+  <div class="fx">
+    <p>storage_dev = full − mean of the same calendar day in the five preceding years</p>
+    <p>surprise7 = Σ<sub>k=0…6</sub> (net_inj − expected net_inj)<sub>t−k</sub></p>
+    <p class="note">The expected flow is fit on earlier gas days only: that day’s heating anomaly, yesterday’s <code>storage_dev</code>, and calendar-month dummies. A five-year average of the flow is not in the file. 29 February uses the 28 February normal and stays out of that average.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Column</th><th>What it is</th><th>Unit</th></tr></thead>
+      <tbody>
+        <tr><td class="num">full</td><td>Gas in storage as a percent of working-gas volume. The published AGSI figure.</td><td class="unit">%</td></tr>
+        <tr><td class="num">full_norm5y</td><td>The average of <code>full</code> on the same calendar day over the five preceding years only. The current year is not in the average.</td><td class="unit">%</td></tr>
+        <tr><td class="num">storage_dev</td><td>Percent full minus that normal, in percentage points. Positive means storage is above the seasonal level. Filled on every session in the file. This is the main storage feature.</td><td class="unit">pp</td></tr>
+        <tr><td class="num">storage_dev_sq</td><td>The square of <code>storage_dev</code>. It lets the curve steepen faster when storage is short than when it is merely above normal.</td><td class="unit">pp²</td></tr>
+        <tr><td class="num">net_inj</td><td>Net injection, <code>−netWithdrawal / 1000</code>. Positive on a day when gas is going into storage.</td><td class="unit">TWh/d</td></tr>
+        <tr><td class="num">inj_util</td><td>Injection divided by injection capacity. High utilisation means the tanks are struggling to take more gas.</td><td class="unit">ratio</td></tr>
+        <tr><td class="num">wd_util</td><td>Withdrawal divided by withdrawal capacity.</td><td class="unit">ratio</td></tr>
+        <tr><td class="num">surprise7</td><td>The storage-flow surprise over seven gas days, after the two-day lag. Positive means more gas went in than the weather and the stock implied. Empty on the first seven sessions; the first value is 13 January 2016.</td><td class="unit">TWh</td></tr>
+        <tr><td class="num">surprise7_z</td><td><code>surprise7</code> minus its mean over the previous 365 gas days, divided by the standard deviation of those days. The day itself is not in the window. Empty until 12 January 2017, which is 266 sessions.</td><td class="unit">σ</td></tr>
+        <tr><td class="num">agsi_estimated</td><td>1 when AGSI marks the day as estimated, 0 when it is confirmed. Estimated days stay in the sample. The history is the revised print, which is a little kinder than the number a trader saw that evening.</td><td class="unit">0/1</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="weather">
+  <h2><span class="n">05</span>Weather and LNG</h2>
+  <p class="sub">Realised weather is lagged one day. The forecast is not lagged. LNG is lagged two days, on the same clock as storage. Degree-days are already a demand-weighted European average, base 18°C.</p>
+  <div class="call">
+    <b>Do not fill the forecast with zero.</b>
+    <p><code>fc_hdd_anom7</code> is empty before 15 February 2024, and again on 6 and 7 October 2026. A zero would be read as a normal weather forecast. The earlier rows stay in the file.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Column</th><th>What it is</th><th>Unit</th></tr></thead>
+      <tbody>
+        <tr><td class="num">hdd</td><td>Heating degree-days for the gas day, known the next session. The 6 October 2026 observation sits on 7 October.</td><td class="unit">°C·day</td></tr>
+        <tr><td class="num">cdd</td><td>Cooling degree-days, same lag and same weighting.</td><td class="unit">°C·day</td></tr>
+        <tr><td class="num">hdd_anom7</td><td>Sum of the daily heating anomaly over the day and the six days before it. The anomaly is today’s degree-days minus the same calendar day in the previous ten years. This is the weather feature in the long sample.</td><td class="unit">°C·day</td></tr>
+        <tr><td class="num">cdd_anom7</td><td>The same seven-day sum for the cooling anomaly.</td><td class="unit">°C·day</td></tr>
+        <tr><td class="num">fc_hdd_anom7</td><td>The ECMWF forecast of that seven-day heating anomaly, joined on the issue date. A second specification, from 15 February 2024 through 5 October 2026. It does not replace <code>hdd_anom7</code> on the long sample.</td><td class="unit">°C·day</td></tr>
+        <tr><td class="num">lng7</td><td>LNG send-out over seven gas days, in TWh. The 5 October 2026 print was replaced with the prior 30-day median before this sum was taken.</td><td class="unit">TWh</td></tr>
+        <tr><td class="num">lng_dev</td><td><code>lng7</code> minus its mean over the previous 365 days. The baseline is the past year, because import capacity rose after 2022.</td><td class="unit">TWh</td></tr>
+        <tr><td class="num">sendout_bad</td><td>True on 7 October 2026 only. That is the lagged flag for 5 October 2026, the one day the API print was replaced. False on every other session.</td><td class="unit">flag</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="calendar">
+  <h2><span class="n">06</span>Calendar controls</h2>
+  <p class="sub">The month dummies follow the delivery month of M1, not the date of the trade. Through most of September the front contract is October, so <code>d_oct</code> is the column that is on.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Column</th><th>What it is</th><th>Unit</th></tr></thead>
+      <tbody>
+        <tr><td class="num">d_feb</td><td>1 when M1 delivers in February. January is the base month and has no column.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_mar</td><td>1 when M1 delivers in March.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_apr</td><td>1 when M1 delivers in April.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_may</td><td>1 when M1 delivers in May.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_jun</td><td>1 when M1 delivers in June.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_jul</td><td>1 when M1 delivers in July.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_aug</td><td>1 when M1 delivers in August.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_sep</td><td>1 when M1 delivers in September.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_oct</td><td>1 when M1 delivers in October.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_nov</td><td>1 when M1 delivers in November.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">d_dec</td><td>1 when M1 delivers in December.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">inj_season</td><td>1 when the trading date is in April through September, the months when European storage is normally injecting.</td><td class="unit">0/1</td></tr>
+        <tr><td class="num">crisis</td><td>1 from 1 July 2021 through 31 March 2023. A split for the report as well as a regressor: coefficients should be shown with it and without it.</td><td class="unit">0/1</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  Column names and order are those of <code>3. Final_DB/final_db.csv</code>. Definitions follow the processing notes and §03–§04 of <cite>TTF Spread Storage Model</cite>.
+</footer>
+</main>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var themeBtn = document.getElementById("theme");
+  var saved = null;
+  try { saved = localStorage.getItem("ttf-theme"); } catch (e) {}
+  if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
+  function label() {
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (root.getAttribute("data-theme") !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+    themeBtn.textContent = dark ? "Light" : "Dark";
+  }
+  label();
+  themeBtn.addEventListener("click", function () {
+    var dark = themeBtn.textContent === "Dark";
+    root.setAttribute("data-theme", dark ? "dark" : "light");
+    try { localStorage.setItem("ttf-theme", dark ? "dark" : "light"); } catch (e) {}
+    label();
+  });
+  var links = Array.prototype.slice.call(document.querySelectorAll(".rail a"));
+  var byId = {};
+  links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        links.forEach(function (a) { a.classList.remove("on"); });
+        var hit = byId[en.target.id];
+        if (hit) hit.classList.add("on");
+      });
+    }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+    document.querySelectorAll("main section").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
